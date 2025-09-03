@@ -1,6 +1,6 @@
-# 📬 CollegePark Backend
+# 📬 Sigveaustheim Backend
 
-Welcome to the **CollegePark** project! This is the backend for a post-like application, built with Laravel. It provides APIs and services for managing posts, users, and more.
+Welcome to the **Sigveaustheim** project! This is the backend for a post-like application, built with Laravel. It provides APIs and services for managing posts, users, and more.
 
 ## 🚀 Features
 - User authentication & management

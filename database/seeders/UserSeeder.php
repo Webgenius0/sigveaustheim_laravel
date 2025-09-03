@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
         // Manually inserted users
         $manualUsers = [
             [
-                'f_name' => 'Sarah',
+                'f_name' => 'Admin',
                 'l_name' => 'Wilson',
                 'email' => 'admin@gmail.com',
                 'role' => 'admin',
@@ -74,6 +74,6 @@ class UserSeeder extends Seeder
         }
 
         // Generate 100 random users using the factory for tasting
-        User::factory(50)->create();
+        // User::factory(50)->create();
     }
 }

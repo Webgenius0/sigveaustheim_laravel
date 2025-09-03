@@ -37,153 +37,29 @@
                     </a>
                 </li>
 
-                {{-- chat --}}
-                <li class="slide">
-                    <a class="side-menu__item {{ request()->routeIs('chat') ? 'has-link' : '' }}"
-                        href="{{ route('admin.chat.index') }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" width="24" height="24"
-                            fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M20.59 13.41l-7.59 7.59c-.36.36-.86.59-1.41.59s-1.05-.23-1.41-.59l-7.59-7.59c-.36-.36-.59-.86-.59-1.41s.23-1.05.59-1.41l7.59-7.59c.36-.36.86-.59 1.41-.59s1.05.23 1.41.59l7.59 7.59c.36.36.59.86.59 1.41s-.23 1.05-.59 1.41zM12 4.41L4.41 12 12 19.59 19.59 12 12 4.41z" />
-                            <circle cx="12" cy="12" r="2" />
-                        </svg>
-                        <span class="side-menu__label">Chat</span>
-                    </a>
-                </li>
-
-                <h3>User and Chat Manage</h3>
-
-                {{-- user, event, venue, promoter list --}}
-                <li class="slide">
-                    <a class="side-menu__item {{ request()->routeIs('user') ? 'has-link' : '' }}"
-                        href="{{ route('admin.user.index') }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            class="side-menu__icon" viewBox="0 0 24 24">
-                            <path
-                                d="M12 2a5 5 0 1 1-5 5 5 5 0 0 1 5-5zm0 14c-4.4 0-8 2.2-8 5a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1c0-2.8-3.6-5-8-5z" />
-                        </svg>
-                        <span class="side-menu__label">Users List</span>
-                    </a>
-                </li>
-
-                {{-- venues list --}}
-                <li class="slide">
-                    <a class="side-menu__item {{ request()->routeIs('user') ? 'has-link' : '' }}"
-                        href="{{ route('admin.venue.index') }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            class="side-menu__icon" viewBox="0 0 24 24">
-                            <path d="M4 22V10l8-6 8 6v12h-5v-6h-6v6H4zM12 4.8 6 9v11h2v-6h8v6h2V9l-6-4.2z" />
-                        </svg>
-                        <span class="side-menu__label">Venues</span>
-                    </a>
-                </li>
-
-                {{-- Events lists --}}
-                <li class="slide">
-                    <a class="side-menu__item {{ request()->routeIs('user') ? 'has-link' : '' }}"
-                        href="{{ route('admin.event.index') }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            class="side-menu__icon" viewBox="0 0 24 24">
-                            <path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2
-                            2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0
-                            16H5V10h14v10zm0-12H5V6h14v2z" />
-                        </svg>
-                        <span class="side-menu__label">Events</span>
-                    </a>
-                </li>
-
-                {{-- posts list --}}
-                <li class="slide">
-                    <a class="side-menu__item {{ request()->routeIs('user') ? 'has-link' : '' }}"
-                        href="{{ route('admin.post.index') }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            class="side-menu__icon" viewBox="0 0 24 24">
-                            <path
-                                d="M4 4h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm1 3v2h14V7H5zm0 4v2h10v-2H5zm0 4v2h8v-2H5z" />
-                        </svg>
-                        <span class="side-menu__label">Posts</span>
-                    </a>
-                </li>
-
                 <h3>CMS</h3>
 
                 {{-- cms-management --}}
-                {{-- home page --}}
+                {{-- landing page --}}
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                             class="side-menu__icon" viewBox="0 0 24 24">
                             <path d=" M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
                         </svg>
-                        <span class="side-menu__label">Home Page</span><i class="angle fa fa-angle-right"></i>
+                        <span class="side-menu__label">How it works</span><i class="angle fa fa-angle-right"></i>
                     </a>
 
                     <ul class="slide-menu">
-                        <li><a href="{{ route('cms.home.hero') }}" class="slide-item">Hero Section</a>
+                        <li><a href="{{ route('cms.hero.section') }}" class="slide-item">Hero Section</a>
                         </li>
-                        <li><a href="{{ route('cms.home.event') }}" class="slide-item">Event Section</a>
+                        <li><a href="{{ route('cms.need.section') }}" class="slide-item">Everything you need</a>
                         </li>
-                        <li><a href="{{ route('cms.home.venues') }}" class="slide-item">Venue Section</a>
+                        <li><a href="{{ route('cms.how-it-works.section') }}" class="slide-item">How it works</a>
                         </li>
-                        <li><a href="{{ route('cms.home.app.download') }}" class="slide-item">App Download
-                                Section</a>
-                        </li>
-                    </ul>
-                </li>
-
-                {{-- event page --}}
-                <li class="slide">
-                    <a class="side-menu__item" data-bs-toggle="slide" href="#">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            class="side-menu__icon" viewBox="0 0 24 24">
-                            <path
-                                d="M7 2v2H5a2 2 0 0 0-2 2v2h18V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm13 8H4v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10zm-2 4h-3v3h3v-3z" />
-                        </svg>
-                        <span class="side-menu__label">Event Page</span><i class="angle fa fa-angle-right"></i>
-                    </a>
-
-                    <ul class="slide-menu">
-                        <li><a href="{{ route('cms.event.hero') }}" class="slide-item">Event Hero Section</a>
-                        </li>
-                        <li><a href="{{ route('cms.event.upcoming') }}" class="slide-item">Upcoming Event</a>
-                        </li>
-                        <li><a href="{{ route('cms.event.details.hero') }}" class="slide-item">Event Details Hero
-                                Section</a>
+                        <li><a href="{{ route('cms.fitness-test.section') }}" class="slide-item">Fitness Tests</a>
                         </li>
                     </ul>
-                </li>
-
-
-                {{-- features page --}}
-                <li class="slide">
-                    <a class="side-menu__item" data-bs-toggle="slide" href="#">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            class="side-menu__icon" viewBox="0 0 24 24">
-                            <path
-                                d="M4 6h2v2H4V6zm0 5h2v2H4v-2zm0 5h2v2H4v-2zm4-10h12v2H8V6zm0 5h12v2H8v-2zm0 5h12v2H8v-2z" />
-                        </svg>
-                        <span class="side-menu__label">Features Page</span><i class="angle fa fa-angle-right"></i>
-                    </a>
-
-                    <ul class="slide-menu">
-                        <li><a href="{{ route('cms.feature.hero') }}" class="slide-item">Hero Section</a>
-                        </li>
-                        <li><a href="{{ route('cms.feature.items.index') }}" class="slide-item">Feature Item</a>
-                        </li>
-                    </ul>
-                </li>
-
-                {{-- newsletter --}}
-                <li class="slide">
-                    <a class="side-menu__item {{ request()->routeIs('faq') ? 'has-link' : '' }}"
-                        href="{{ route('cms.newsletter.index') }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            class="side-menu__icon" viewBox="0 0 24 24">
-                            <path
-                                d="M20 4H4a2 2 0 0 0-2 2v1.8l10 6.25L22 7.8V6a2 2 0 0 0-2-2zm0 4.25-8 5-8-5V18a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.25z" />
-                        </svg>
-                        <span class="side-menu__label">Newsletter</span>
-                    </a>
                 </li>
 
                 {{-- Setttings --}}
