@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Api\React\User\Auth;
+namespace App\Http\Controllers\Api\Auth;
 
 use Exception;
 use App\Models\User;
 use App\Helper\Helper;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\UserRegisterRequest;
 use App\Http\Resources\UserResource;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -19,111 +20,115 @@ class UserProfileController extends Controller
 {
     use ApiResponse;
 
-
     //get user progile
     public function profile()
     {
         try {
             $user = auth('api')->user();
+
             if (!$user) {
-                return $this->error([], 'User not found.', 200);
+                return $this->error([], 'User not found.', 404);
             }
 
-            return $this->success(new UserResource($user), 'User Profile Retrieved successfully', 200);
+            // load school & contacts
+            $user->load(['school', 'school.contacts']);
+
+            return $this->success(
+                new UserResource($user),
+                'User profile retrieved successfully.',
+                200
+            );
         } catch (Exception $e) {
-            return $this->error([], $e->getMessage(), 500);
+            Log::error($e->getMessage());
+            return $this->error([], 'Something went wrong: ' . $e->getMessage(), 500);
         }
     }
+
 
     // update profile
     public function updateProfile(Request $request)
     {
+        DB::beginTransaction();
+
         try {
-            $validator = Validator::make($request->all(), [
-                'f_name'       => ['nullable', 'string', 'max:50'],
-                'l_name'       => ['nullable', 'string', 'max:50'],
-                'avatar'       => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5120'],
-                'profession'   => ['nullable', 'string', 'max:100'],
-                'gender'       => ['nullable', 'string', 'in:male,female,Other'],
-                'country'      => ['nullable', 'string', 'max:255'],
-                'age'          => ['nullable', 'integer', 'min:0'],
-                'address'      => ['nullable', 'string', 'max:255'],
-            ]);
-
-            if ($validator->fails()) {
-                return $this->error([], $validator->errors()->first(), 422);
-            }
-
             $user = auth('api')->user();
 
-            $data = $validator->validated();
-
-            if ($request->hasFile('avatar')) {
-                if ($user->avatar) {
-                    Helper::deleteImage($user->avatar);
-                }
-                $avatarPath = Helper::uploadImage($request->file('avatar'), 'profile');
-                $data['avatar'] = $avatarPath;
+            if (!$user) {
+                return $this->error([], 'User not found.', 404);
             }
 
-            $user->update($data);
+            // validation
+            $validatedData = $request->validate([
+                // school
+                'school_name' => 'sometimes|string|max:255',
+                'principal_name' => 'sometimes|string|max:255',
+                'school_email' => 'sometimes|email|max:100|unique:schools,email,' . $user->school_id,
+                'school_phone' => 'sometimes|string|max:20',
+                'street_address' => 'sometimes|string|max:255',
+                'city' => 'sometimes|string|max:100',
+                'state' => 'sometimes|string|max:100',
+                'zip_code' => 'sometimes|string|max:20',
+                'approximate_student_count' => 'nullable|integer',
+
+                // contact
+                'contact_name' => 'sometimes|string|max:255',
+                'contact_email' => 'sometimes|email|max:100',
+                'contact_phone' => 'nullable|string|max:20',
+            ]);
+
+            // update school
+            if ($user->school) {
+                $user->school->update([
+                    'name' => $validatedData['school_name'] ?? $user->school->name,
+                    'principal_name' => $validatedData['principal_name'] ?? $user->school->principal_name,
+                    'email' => $validatedData['school_email'] ?? $user->school->email,
+                    'phone' => $validatedData['school_phone'] ?? $user->school->phone,
+                    'street_address' => $validatedData['street_address'] ?? $user->school->street_address,
+                    'city' => $validatedData['city'] ?? $user->school->city,
+                    'state' => $validatedData['state'] ?? $user->school->state,
+                    'zip_code' => $validatedData['zip_code'] ?? $user->school->zip_code,
+                    'approximate_student_count' => $validatedData['approximate_student_count'] ?? $user->school->approximate_student_count,
+                ]);
+            }
+
+            // update contact
+            $contact = $user->school->contacts()->first();
+            if ($contact) {
+                $contact->update([
+                    'name' => $validatedData['contact_name'] ?? $contact->name,
+                    'email' => $validatedData['contact_email'] ?? $contact->email,
+                    'phone' => $validatedData['contact_phone'] ?? $contact->phone,
+                ]);
+            }
 
 
-            return $this->success(new UserResource($user), 'Profile updated successfully.', 200);
+            if (!empty($validatedData['contact_email'])) {
+                $user->update([
+                    'email' => $validatedData['contact_email'],
+                ]);
+            }
+
+            DB::commit();
+
+            return $this->success(
+                new UserResource($user->fresh()->load(['school', 'school.contacts'])),
+                'Profile updated successfully.',
+                200
+            );
         } catch (Exception $e) {
-
-            Log::error('Profile Update Error: ' . $e->getMessage());
-            return $this->error([], 'Failed to update profile.', 500);
+            DB::rollBack();
+            Log::error($e->getMessage());
+            return $this->error([], 'Something went wrong: ' . $e->getMessage(), 500);
         }
     }
 
-    //update location
-    public function updateLocation(Request $request)
-    {
-        try {
-            $validator = Validator::make($request->all(), [
-                'address'       => ['nullable', 'string', 'max:50'],
-                'city'       => ['nullable', 'string', 'max:50'],
-                'state'       => ['nullable', 'string', 'max:255'],
-                'zip_code'   => ['nullable', 'string', 'max:100'],
-                'latitude'       => ['nullable', 'string', 'max:255'],
-                'longitude'      => ['nullable', 'string', 'max:255'],
-            ]);
-
-            if ($validator->fails()) {
-                return $this->error([], $validator->errors()->first(), 422);
-            }
-
-            $user = auth('api')->user();
-
-            $data = $validator->validated();
-
-            $user->update($data);
-
-            $userData = [
-                'address' => $user->address,
-                'city' => $user->city,
-                'state' => $user->state,
-                'zip_code' => $user->zip_code,
-                'latitude' => $user->latitude,
-                'longitude' => $user->longitude,
-            ];
-
-
-            return $this->success($userData, 'Profile updated successfully.', 200);
-        } catch (Exception $e) {
-
-            Log::error('Profile Update Error: ' . $e->getMessage());
-            return $this->error([], 'Failed to update profile.', 500);
-        }
-    }
 
     // update avatar
     public function updateAvatar(Request $request)
     {
         try {
             $validator = Validator::make($request->all(), [
-                'avatar' => ['required', 'image', 'max:5120'], // 5MB max
+                'avatar' => ['required', 'image', 'max:5120'],
             ]);
 
 
@@ -146,111 +151,5 @@ class UserProfileController extends Controller
             Log::error('Avatar Update Error: ' . $e->getMessage());
             return $this->error([], $e->getMessage(), 500);
         }
-    }
-
-    //update password
-    public function updatePassword(Request $request)
-    {
-        try {
-            $validator = Validator::make($request->all(), [
-                'current_password' => ['required', 'string', 'min:8'],
-                'password'  => ['required', 'string', 'min:8', 'confirmed'],
-            ]);
-
-            if ($validator->fails()) {
-                return $this->error([], $validator->errors()->first(), 200);
-            }
-
-            $user = auth('api')->user();
-
-            if (!Hash::check($request->current_password, $user->password)) {
-                return $this->error([], 'current password is incorrect.', 200);
-            }
-
-            $user->update(['password' => Hash::make($request->password)]);
-
-            return $this->success(['Password updated successfully'], 'Password updated successfully.', 200);
-        } catch (Exception $e) {
-            return $this->error([], $e->getMessage(), 500);
-        }
-    }
-
-    //delete profile
-    public function deleteProfile()
-    {
-        try {
-            $user = auth('api')->user();
-
-            if ($user->avatar) {
-                Helper::deleteImage($user->avatar);
-            }
-
-            $user->delete();
-
-            return $this->success([], 'Profile deleted successfully.', 200);
-        } catch (Exception $e) {
-
-            Log::info($e->getMessage());
-            return $this->error([], $e->getMessage(), 500);
-        }
-    }
-
-    //user profile gallery
-    public function gallery(Request $request)
-    {
-        $user = auth('api')->user();
-        if (!$user) {
-            return $this->error([], 'User not found.', 404);
-        }
-
-        $perPage = $request->input('per_page', 10);
-        $page = $request->input('page', 1);
-
-        // User post images
-        $postImages = $user->postImages()
-            ->select('post_images.id', 'post_images.post_id', 'post_images.image_path')
-            ->get()
-            ->map(function ($img) {
-                return [
-                    'id'         => $img->id,
-                    'post_id'    => $img->post_id,
-                    'image_path' => url($img->image_path), // full URL
-                    'type'       => 'post_image',
-                ];
-            });
-
-        // User event banners
-        $eventBanners = $user->events()
-            ->select('id', 'banner')
-            ->get()
-            ->map(function ($event) {
-                return [
-                    'id'         => $event->id,
-                    'post_id'    => null,
-                    'image_path' => url($event->banner),
-                    'type'       => 'event_banner',
-                ];
-            });
-
-        // Merge all images
-        $allImages = $postImages->merge($eventBanners)->values();
-
-        // Manual pagination
-        $total = $allImages->count();
-        $results = $allImages->forPage($page, $perPage);
-        $paginator = new LengthAwarePaginator($results, $total, $perPage, $page, [
-            'path' => $request->url(),
-            'query' => $request->query(),
-        ]);
-
-        return $this->success([
-            'images'     => $paginator->items(),
-            'pagination' => [
-                'total'        => $paginator->total(),
-                'current_page' => $paginator->currentPage(),
-                'last_page'    => $paginator->lastPage(),
-                'per_page'     => $paginator->perPage(),
-            ],
-        ], 'Images retrieved successfully.');
     }
 }

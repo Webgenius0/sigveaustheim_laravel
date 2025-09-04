@@ -4,6 +4,7 @@ use App\Http\Controllers\Web\Backend\CMS\FitnessTestController;
 use App\Http\Controllers\Web\Backend\CMS\HeroController;
 use App\Http\Controllers\Web\Backend\CMS\HowItWorksController;
 use App\Http\Controllers\Web\Backend\CMS\NeedController;
+use App\Http\Controllers\Web\Backend\CMS\ReadyToTransformController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Backend\DashboardController;
 use App\Http\Controllers\Web\Backend\TestimonialController;
@@ -48,6 +49,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/fitness-test/item/edit/{id}', [FitnessTestController::class, 'editItem'])->name('fitness-test.item.edit');
         Route::post('/fitness-test/item/update/{id}', [FitnessTestController::class, 'updateItem'])->name('fitness-test.item.update');
         Route::delete('/fitness-test/item/delete/{id}', [FitnessTestController::class, 'destroy'])->name('fitness-test.item.destroy');
+
+        //ready to transform section
+         // how it works section
+        Route::get('/ready-to-transform', [ReadyToTransformController::class, 'index'])->name('ready-to-transform.section');
+        Route::post('/ready-to-transform/update', [ReadyToTransformController::class, 'update'])->name('update.ready-to-transform.section');
     });
 });
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\React\User\Auth;
+namespace App\Http\Controllers\Api\Auth;
 
 
 use Exception;
@@ -21,7 +21,9 @@ class ResetPasswordController extends Controller
 {
     use ApiResponse;
 
-    //send forget otp
+    /**
+     * Send OTP
+     */
     public function forgotPassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -39,7 +41,7 @@ class ResetPasswordController extends Controller
                 return $this->error([], 'User not found.', 404);
             }
 
-            $otp = rand(1000, 9999);
+            $otp = rand(100000, 999999);
 
             $user->update([
                 'otp'            => $otp,
@@ -51,21 +53,70 @@ class ResetPasswordController extends Controller
 
             return $this->success([
                 'email' => $user->email,
-                'otp'   => $otp
-            ], 'Forgot password OTP sent successfully.', 200);
+                'otp'   => $otp // for testing; remove in production
+            ], 'An OTP has been sent to your registered email address. Please check your inbox.', 200);
         } catch (Exception $e) {
-            Log::error($e->getMessage());
             return $this->error([], 'An error occurred. Please try again later.', 500);
         }
     }
 
+    /**
+     * Re-Send OTP
+     */
+    public function resendOtp(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => ['required', 'email', 'exists:users,email'],
+        ]);
 
+        if ($validator->fails()) {
+            return $this->error([], $validator->errors()->first(), 422);
+        }
 
+        try {
+            $user = User::where('email', $request->email)->first();
+            if (!$user) {
+                return $this->error([], 'User not found', 404);
+            }
+
+            if ($user->otp_expires_at) {
+                $lastSent = $user->otp_expires_at->subMinutes(5);
+                $secondsSinceLast = (int) $lastSent->diffInSeconds(now());
+                if ($secondsSinceLast < 60) {
+                    $secondsLeft = 60 - $secondsSinceLast;
+                    return $this->error([], 'Please wait ' . $secondsLeft . ' sec before requesting a new OTP.', 429);
+                }
+            }
+
+            $otp = rand(100000, 999999);
+            $otpExpiresAt = now()->addMinutes(5);
+
+            $user->update([
+                'otp' => $otp,
+                'otp_expires_at' => $otpExpiresAt,
+            ]);
+
+            // You can send the OTP via email or SMS here. Example:
+            // Mail::to($user->email)->queue(new SendOtpMail($otp));
+
+            return $this->success([
+                'email' => $user->email,
+                'otp'   => $otp
+            ], 'A new OTP has been sent to your registered email address. Please check your inbox.', 200);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return $this->error([], $e->getMessage(), 500);
+        }
+    }
+
+    /**
+     * OTP verification
+     */
     public function verifyOTP(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|exists:users,email',
-            'otp'   => 'required|digits:4',
+            'otp'   => 'required|digits:6',
         ]);
 
         if ($validator->fails()) {
@@ -100,7 +151,7 @@ class ResetPasswordController extends Controller
                 'status'  => true,
                 'message' => 'OTP verified successfully.',
                 'code'    => 200,
-                'token'   => $token,
+                'password_reset_token'   => $token,
             ]);
         } catch (Exception $e) {
             Log::error($e->getMessage());
@@ -108,7 +159,10 @@ class ResetPasswordController extends Controller
         }
     }
 
-    // set new password
+
+    /**
+     * New password set
+     */
     public function resetPassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -146,50 +200,6 @@ class ResetPasswordController extends Controller
             ]);
 
             return $this->success([], 'Password reset successfully.', 200);
-        } catch (Exception $e) {
-            Log::error($e->getMessage());
-            return $this->error([], $e->getMessage(), 500);
-        }
-    }
-
-    //resend otp
-    public function resendOtp(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => ['required', 'email', 'exists:users,email'],
-        ]);
-
-        if ($validator->fails()) {
-            return $this->error([], $validator->errors()->first(), 422);
-        }
-
-        try {
-            $user = User::where('email', $request->email)->first();
-            if (!$user) {
-                return $this->error([], 'User not found', 404);
-            }
-
-            if ($user->otp_expires_at) {
-                $lastSent = $user->otp_expires_at->subMinutes(5);
-                $secondsSinceLast = (int) $lastSent->diffInSeconds(now());
-                if ($secondsSinceLast < 60) {
-                    $secondsLeft = 60 - $secondsSinceLast;
-                    return $this->error([], 'Please wait ' . $secondsLeft . ' sec before requesting a new OTP.', 429);
-                }
-            }
-
-            $otp = rand(1000, 9999);
-            $otpExpiresAt = now()->addMinutes(5);
-
-            $user->update([
-                'otp' => $otp,
-                'otp_expires_at' => $otpExpiresAt,
-            ]);
-
-            // You can send the OTP via email or SMS here. Example:
-            // Mail::to($user->email)->queue(new SendOtpMail($otp));
-
-            return $this->success(['otp' => $otp], 'OTP resent successfully.', 200);
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return $this->error([], $e->getMessage(), 500);

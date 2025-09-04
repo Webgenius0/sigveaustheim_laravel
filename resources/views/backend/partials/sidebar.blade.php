@@ -59,6 +59,8 @@
                         </li>
                         <li><a href="{{ route('cms.fitness-test.section') }}" class="slide-item">Fitness Tests</a>
                         </li>
+                        <li><a href="{{ route('cms.ready-to-transform.section') }}" class="slide-item">Ready to transform</a>
+                        </li>
                     </ul>
                 </li>
 
