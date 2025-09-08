@@ -10,7 +10,7 @@
 <div class="container-login100">
     <div class="wrap-login100 p-0">
         <div class="card-body">
-            <form class="login100-form validate-form" method="POST" action="{{ route('login') }}">
+            <form class="login100-form validate-form" method="POST" action="{{ route('login.post') }}">
                 @csrf
                 <div class="login100-form-title">
                     <h2>Sign In</h2>

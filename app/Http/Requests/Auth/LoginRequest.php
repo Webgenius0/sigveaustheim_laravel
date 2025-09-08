@@ -30,6 +30,7 @@ class LoginRequest extends FormRequest
             'username' => ['required', 'string', 'exists:users,username', 'max:50'],
             'password' => ['required', 'string', 'min:8'],
         ];
+
     }
 
 
@@ -42,11 +43,11 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('username', 'password'), $this->boolean('remember'))) {
+        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'username' => trans('auth.failed'),
+                'email' => trans('auth.failed'),
             ]);
         }
 

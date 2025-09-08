@@ -6,10 +6,8 @@ namespace App\Enums;
 enum SectionEnum: string
 {
     case HERO = 'hero';
-    case UPCOMING_EVENT = 'upcoming-event';
-    case POPULAR_VANUE = 'popular-vanue';
-    case APP_DOWNLOAD = 'app-download';
-    case NEWSLETTER = 'newsletter';
-    case CARD = 'card';
-    case TEXT = 'text';
+    case FITNESS_TEST = 'fitness-test';
+    case HOW_IT_WORKS = 'how-it-works';
+    case EVERYTHING_YOU_NEED = 'everything-you-need';
+    case READY_TO_TRANSFORM = 'ready-to-transform';
 }

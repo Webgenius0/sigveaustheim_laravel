@@ -32,7 +32,7 @@ class UserRegisterRequest extends FormRequest
 
             // User Info
             'username' => ['required', 'string', 'max:50', 'unique:users,username'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'], // confirmed = password_confirmation ফিল্ড লাগবে
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
 

@@ -1,9 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\CMSDataController;
+use App\Http\Controllers\Api\StudentController;
+use App\Http\Controllers\Api\FitnessTestController;
 use App\Http\Controllers\Api\Auth\UserProfileController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\Auth\AuthenticationController;
+use App\Http\Controllers\Api\FitnessScoreController;
 
 //health-check
 Route::get("/check", function () {
@@ -22,6 +26,12 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::post('/resend-otp', [ResetPasswordController::class, 'resendOtp']);
     Route::post('/verify-otp', [ResetPasswordController::class, 'verifyOTP']);
     Route::post('/reset-password', [ResetPasswordController::class, 'ResetPassword']);
+
+
+    //CMS Data Routes
+    Route::group(['prefix' => 'cms'], function () {
+        Route::get('/landing', [CMSDataController::class, 'getData']);
+    });
 });
 
 
@@ -34,4 +44,19 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/profile', [UserProfileController::class, 'profile']);
     Route::post('/update-profile', [UserProfileController::class, 'updateProfile']);
     Route::post('/update-avatar', [UserProfileController::class, 'updateAvatar']);
+
+    //Student Routes
+    Route::get('/students', [StudentController::class, 'index']);
+    Route::get('/student/{id}', [StudentController::class, 'show']);
+    Route::post('/student/store', [StudentController::class, 'store']);
+    Route::post('/student/update/{id}', [StudentController::class, 'update']);
+    Route::delete('/student/delete/{id}', [StudentController::class, 'destroy']);
+
+    //Fitness Test Routes
+    Route::get('/fitness-tests', [FitnessTestController::class, 'index']);
+    Route::get('/fitness-test/{id}', [FitnessTestController::class, 'show']);
+
+    Route::post('/fitness-scores', [FitnessScoreController::class, 'store']);
+
+
 });
