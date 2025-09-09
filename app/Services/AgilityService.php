@@ -4,9 +4,9 @@ namespace App\Services;
 
 use DateTime;
 use App\Models\Student;
-use App\Models\FitnessTestRule;
+use App\Models\AgilityTestRule;
 
-class FitnessService
+class AgilityService
 {
     /**
      * Create a new class instance.
@@ -27,7 +27,7 @@ class FitnessService
 
 
         // Find matching rule
-        $rule = FitnessTestRule::where('gender', $student->gender)
+        $rule = AgilityTestRule::where('gender', $student->gender)
             ->where('age', $age)
             ->where('min_duration', '<=', $duration)
             ->where('max_duration', '>=', $duration)

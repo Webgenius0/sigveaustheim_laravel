@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Mail;
+
+use App\Models\Contact;
+use App\Models\School;
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+
+class AdminSchoolApprovalMail extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    /**
+     * Create a new message instance.
+     */
+    public $contact;
+    public $school;
+    public $approveUrl;
+    public $cancelUrl;
+
+    public function __construct(School $school, string $approveUrl, string $cancelUrl, Contact $contact)
+    {
+        $this->school = $school;
+        $this->approveUrl = $approveUrl;
+        $this->cancelUrl = $cancelUrl;
+        $this->contact = $contact;
+    }
+
+    /**
+     * Get the message envelope.
+     */
+    public function envelope(): Envelope
+    {
+        return new Envelope(
+            subject: 'Admin School Approval Mail',
+        );
+    }
+
+    /**
+     * Get the message content definition.
+     */
+    // public function content(): Content
+    // {
+    //     return new Content(
+    //         view: 'view.name',
+    //     );
+    // }
+
+    /**
+     * Get the attachments for the message.
+     *
+     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     */
+    public function attachments(): array
+    {
+        return [];
+    }
+
+
+    public function build()
+    {
+        return $this->subject('New School Registration - Approval Required')
+            ->view('emails.admin_school_approval');
+    }
+}

@@ -10,8 +10,8 @@ class TestScore extends Model
         'student_id',
         'fitness_test_id',
         'tested_by',
+        'unit',
         'score',
-        'duration',
         'test_date',
     ];
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\FlexibilityController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CMSDataController;
 use App\Http\Controllers\Api\StudentController;
@@ -7,7 +8,7 @@ use App\Http\Controllers\Api\FitnessTestController;
 use App\Http\Controllers\Api\Auth\UserProfileController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\Auth\AuthenticationController;
-use App\Http\Controllers\Api\FitnessScoreController;
+use App\Http\Controllers\Api\AgilityController;
 
 //health-check
 Route::get("/check", function () {
@@ -56,7 +57,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/fitness-tests', [FitnessTestController::class, 'index']);
     Route::get('/fitness-test/{id}', [FitnessTestController::class, 'show']);
 
-    Route::post('/fitness-scores', [FitnessScoreController::class, 'store']);
+    Route::post('/agility-scores', [AgilityController::class, 'store']);
+    Route::post('/flexibility-scores', [FlexibilityController::class, 'store']);
 
 
 });

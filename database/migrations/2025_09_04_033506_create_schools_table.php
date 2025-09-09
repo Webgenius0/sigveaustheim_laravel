@@ -22,7 +22,21 @@ return new class extends Migration
             $table->string('state');
             $table->string('zip_code', 20);
             $table->integer('approximate_student_count')->nullable();
+
+            // Approval workflow columns
+            $table->enum('status', ['pending', 'approved', 'cancelled'])->default('pending');
+            $table->unsignedBigInteger('approved_by')->nullable();
+            $table->timestamp('approved_at')->nullable();
+            $table->unsignedBigInteger('cancelled_by')->nullable();
+            $table->timestamp('cancelled_at')->nullable();
+            $table->string('approval_token')->nullable()->unique();
+
             $table->timestamps();
+
+            // Foreign keys
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete()->restrictOnDelete();
+            $table->foreign('approved_by')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('cancelled_by')->references('id')->on('users')->onDelete('set null');
         });
     }
 

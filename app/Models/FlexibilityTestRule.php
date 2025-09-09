@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FitnessTestRule extends Model
+class FlexibilityTestRule extends Model
 {
     //
 }

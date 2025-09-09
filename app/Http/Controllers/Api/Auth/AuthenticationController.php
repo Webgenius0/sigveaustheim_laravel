@@ -8,12 +8,16 @@ use App\Models\User;
 use App\Models\School;
 use App\Models\Contact;
 use App\Traits\ApiResponse;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Mail\TeacherPendingMail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AdminSchoolApprovalMail;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Support\Facades\Validator;
@@ -29,14 +33,25 @@ class AuthenticationController extends Controller
     */
     public function register(UserRegisterRequest $request)
     {
-        // dd($request->all());
         DB::beginTransaction();
 
         try {
             $validatedData = $request->validated();
 
+            // User create first
+            $user = User::create([
+                'username' => $validatedData['username'],
+                'email' => $validatedData['contact_email'],
+                'password' => bcrypt($validatedData['password']),
+                'role' => 'teacher', // teacher role
+            ]);
+
+            // Generate approval token for school
+            $approvalToken = base64_encode(Str::random(40));
+
             // School create
             $school = School::create([
+                'user_id' => $user->id, // link user
                 'name' => $validatedData['school_name'],
                 'principal_name' => $validatedData['principal_name'],
                 'email' => $validatedData['school_email'],
@@ -46,6 +61,8 @@ class AuthenticationController extends Controller
                 'state' => $validatedData['state'],
                 'zip_code' => $validatedData['zip_code'],
                 'approximate_student_count' => $validatedData['approximate_student_count'],
+                'status' => 'pending',
+                'approval_token' => $approvalToken,
             ]);
 
             // Contact create
@@ -57,26 +74,24 @@ class AuthenticationController extends Controller
                 'role' => 'PE Teacher',
             ]);
 
-            // User create
-            $user = User::create([
-                'school_id' => $school->id,
-                'username' => $validatedData['username'],
-                'email' => $validatedData['contact_email'], // same as contact email
-                'password' => bcrypt($validatedData['password']),
-                'role' => 'user',
-            ]);
-
             DB::commit();
 
-            return $this->success(
-                [
-                    'school' => $school,
-                    'contact' => $contact,
-                    'user' => $user,
-                ],
-                'Registration successful.',
-                201
-            );
+            // After creating $user, $school, $contact
+            $approveUrl = route('admin.schools.approve', ['token' => $school->approval_token]);
+            $cancelUrl = route('admin.schools.cancel', ['token' => $school->approval_token]);
+
+            // Send email to admin
+            Mail::to('arifulislam6460@gmail.com')->send(new AdminSchoolApprovalMail($school, $approveUrl, $cancelUrl, $contact));
+
+            // Send email to teacher
+            Mail::to($contact->email)->send(new TeacherPendingMail($contact, $school));
+
+
+            return $this->success([
+                'user' => $user,
+                'school' => $school,
+                'contact' => $contact,
+            ], 'Registration successful. Pending admin approval.', 201);
         } catch (Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());

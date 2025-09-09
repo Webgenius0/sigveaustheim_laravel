@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fitness_test_rules', function (Blueprint $table) {
+        Schema::create('agility_test_rules', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('age')->nullable();
 

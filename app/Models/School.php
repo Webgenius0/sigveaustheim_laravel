@@ -16,6 +16,13 @@ class School extends Model
         'state',
         'zip_code',
         'approximate_student_count',
+        'status',
+        'approved_by',
+        'approved_at',
+        'cancelled_by',
+        'cancelled_at',
+        'approval_token',
+        'user_id',
     ];
 
 

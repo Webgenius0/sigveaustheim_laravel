@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 
 class Helper
 {
+    //upload image
     public static function uploadImage($file, $folder)
     {
 
@@ -27,23 +28,7 @@ class Helper
         return 'uploads/' . $folder . '/' . $imageName;
     }
 
-    public static function fileUpload($file, string $folder, string $name): ?string
-    {
-        if (!$file->isValid()) {
-            return null;
-        }
-
-        $imageName = Str::slug($name) . '.' . $file->extension();
-        $path      = public_path('uploads/' . $folder);
-        if (!file_exists($path)) {
-            mkdir($path, 0777, true);
-        }
-        $file->move($path, $imageName);
-        return 'uploads/' . $folder . '/' . $imageName;
-    }
-
-
-
+    //delete image
     public static function deleteImage($imageUrl)
     {
         if (!$imageUrl) {
@@ -56,81 +41,5 @@ class Helper
             return unlink($filePath);
         }
         return false;
-    }
-
-    // public static function deleteImage(string $path)
-    // {
-    //     if (file_exists($path)) {
-    //         unlink($path);
-    //     }
-    // }
-
-
-    public static function fileDelete(string $path): void
-    {
-        if (file_exists($path)) {
-            unlink($path);
-        }
-    }
-
-
-    public static function deleteImages($imageUrls)
-    {
-        if (is_array($imageUrls)) {
-            foreach ($imageUrls as $imageUrl) {
-                $baseUrl = url('/');
-                $relativePath = str_replace($baseUrl . '/', '', $imageUrl);
-                $fullPath = public_path($relativePath);
-
-
-                if (file_exists($fullPath) && is_file($fullPath)) {
-
-                    if (!unlink($fullPath)) {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        return false;
-    }
-
-    //delete videos
-    public static function deleteVideos($videoPaths)
-    {
-        if (!is_array($videoPaths)) {
-            $videoPaths = [$videoPaths];
-        }
-
-        foreach ($videoPaths as $path) {
-            $fullPath = public_path($path);
-            if (file_exists($fullPath) && is_file($fullPath)) {
-                @unlink($fullPath); // suppress warning
-            }
-        }
-    }
-
-
-
-    // calculate age from date of birth
-    public static function calculateAge($dateOfBirth)
-    {
-        if (!$dateOfBirth) {
-            return null;
-        }
-
-        $dob = \Carbon\Carbon::parse($dateOfBirth);
-        $now = \Carbon\Carbon::now();
-
-        return (int) $dob->diffInYears($now);
-    }
-
-    //delete file
-    public static function deleteFile($filePath)
-    {
-        if ($filePath && file_exists(public_path($filePath))) {
-            unlink(public_path($filePath));
-        }
     }
 }

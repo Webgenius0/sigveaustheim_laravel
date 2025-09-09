@@ -2,12 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\FitnessTestRule;
+use App\Models\AgilityTestRule;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class TestRuleSeeder extends Seeder
+class AgilitySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -332,7 +330,7 @@ class TestRuleSeeder extends Seeder
         ];
 
         foreach ($rules as $rule) {
-            FitnessTestRule::create($rule);
+            AgilityTestRule::create($rule);
         }
     }
 }

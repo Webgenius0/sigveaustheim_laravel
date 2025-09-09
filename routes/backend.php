@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\Backend\CMS\HeroController;
 use App\Http\Controllers\Web\Backend\CMS\HowItWorksController;
 use App\Http\Controllers\Web\Backend\CMS\NeedController;
 use App\Http\Controllers\Web\Backend\CMS\ReadyToTransformController;
+use App\Http\Controllers\Web\Backend\SchoolManageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Backend\DashboardController;
 use App\Http\Controllers\Web\Backend\TestimonialController;
@@ -51,10 +52,17 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::delete('/fitness-test/item/delete/{id}', [FitnessTestController::class, 'destroy'])->name('fitness-test.item.destroy');
 
         //ready to transform section
-         // how it works section
+        // how it works section
         Route::get('/ready-to-transform', [ReadyToTransformController::class, 'index'])->name('ready-to-transform.section');
         Route::post('/ready-to-transform/update', [ReadyToTransformController::class, 'update'])->name('update.ready-to-transform.section');
     });
+
+    //approve school
+    // Route::get('/school/approve', [SchoolManageController::class, 'approve'])->name('admin.schools.approve');
+    // Route::get('/school/cancel', [SchoolManageController::class, 'cancel'])->name('admin.schools.cancel');
+
+    Route::get('/school/approve/{token}', [SchoolManageController::class, 'approveFromEmail'])->name('admin.schools.approve');
+    Route::get('/school/cancel/{token}', [SchoolManageController::class, 'cancelFromEmail'])->name('admin.schools.cancel');
 });
 
 
