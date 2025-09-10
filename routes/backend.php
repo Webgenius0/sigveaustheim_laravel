@@ -5,9 +5,10 @@ use App\Http\Controllers\Web\Backend\CMS\HeroController;
 use App\Http\Controllers\Web\Backend\CMS\HowItWorksController;
 use App\Http\Controllers\Web\Backend\CMS\NeedController;
 use App\Http\Controllers\Web\Backend\CMS\ReadyToTransformController;
-use App\Http\Controllers\Web\Backend\SchoolManageController;
+use App\Http\Controllers\Web\Backend\SchoolApprovalController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Backend\DashboardController;
+use App\Http\Controllers\Web\Backend\SchoolManageController;
 use App\Http\Controllers\Web\Backend\TestimonialController;
 use App\Http\Controllers\Web\Backend\Settings\SocialController;
 use App\Http\Controllers\Web\Backend\Settings\ProfileController;
@@ -58,11 +59,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     });
 
     //approve school
-    // Route::get('/school/approve', [SchoolManageController::class, 'approve'])->name('admin.schools.approve');
-    // Route::get('/school/cancel', [SchoolManageController::class, 'cancel'])->name('admin.schools.cancel');
+    Route::get('/school/approve/{token}', [SchoolApprovalController::class, 'approveFromEmail'])->name('admin.schools.approve');
+    Route::get('/school/cancel/{token}', [SchoolApprovalController::class, 'cancelFromEmail'])->name('admin.schools.cancel');
 
-    Route::get('/school/approve/{token}', [SchoolManageController::class, 'approveFromEmail'])->name('admin.schools.approve');
-    Route::get('/school/cancel/{token}', [SchoolManageController::class, 'cancelFromEmail'])->name('admin.schools.cancel');
+    //school manage form dashobard
+    Route::get('/school/list', [SchoolManageController::class, 'index'])->name('schools.list');
+    Route::get('/school/show', [SchoolManageController::class, 'show'])->name('school.show');
+    // Route::get('/school/status/{id}', [SchoolManageController::class, 'status'])->name('school.status');
+    Route::post('/school/status/{id}', [SchoolManageController::class, 'status'])->name('school.status');
 });
 
 

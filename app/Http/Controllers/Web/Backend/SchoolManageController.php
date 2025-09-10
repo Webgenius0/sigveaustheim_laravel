@@ -2,116 +2,150 @@
 
 namespace App\Http\Controllers\Web\Backend;
 
+use Exception;
 use App\Models\School;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
 
 class SchoolManageController extends Controller
 {
-    // public function approve(Request $request)
-    // {
-    //     $request->validate([
-    //         'approval_token' => 'required|string|exists:schools,approval_token',
-    //     ]);
-
-    //     $school = School::where('approval_token', $request->approval_token)->firstOrFail();
-
-    //     // If already approved/cancelled
-    //     if ($school->status !== 'pending') {
-    //         return response()->json([
-    //             'message' => 'This school has already been ' . $school->status,
-    //         ], 400);
-    //     }
-
-    //     DB::transaction(function () use ($school) {
-    //         $school->update([
-    //             'status' => 'approved',
-    //             'approved_by' => Auth::id(),
-    //             'approved_at' => now(),
-    //             'approval_token' => null, // burn the token after use
-    //         ]);
-    //     });
-
-    //     return response()->json([
-    //         'message' => 'School approved successfully.',
-    //         'school' => $school,
-    //     ], 200);
-    // }
-
-    // public function cancel(Request $request)
-    // {
-    //     $request->validate([
-    //         'approval_token' => 'required|string|exists:schools,approval_token',
-    //     ]);
-
-    //     $school = School::where('approval_token', $request->approval_token)->firstOrFail();
-
-    //     if ($school->status !== 'pending') {
-    //         return response()->json([
-    //             'message' => 'This school has already been ' . $school->status,
-    //         ], 400);
-    //     }
-
-    //     DB::transaction(function () use ($school) {
-    //         $school->update([
-    //             'status' => 'cancelled',
-    //             'cancelled_by' => Auth::id(),
-    //             'cancelled_at' => now(),
-    //             'approval_token' => null, // burn the token after use
-    //         ]);
-    //     });
-
-    //     return response()->json([
-    //         'message' => 'School cancelled successfully.',
-    //         'school' => $school,
-    //     ], 200);
-    // }
-
-
-    public function approveFromEmail($token)
+    /**
+     * show all school
+     */
+    public function index(Request $request)
     {
-        $school = School::where('approval_token', $token)->firstOrFail();
+        if ($request->ajax()) {
+            $query = School::latest('id');
+            // Filter by status
+            if ($request->has('status') && $request->status !== 'all') {
+                $query->where('status', $request->status);
+            }
 
-        if ($school->status !== 'pending') {
-            return response()->json(['message' => 'This school is already ' . $school->status], 400);
+            $schools = $query->latest()->get();
+
+            return DataTables::of($schools)
+                ->addIndexColumn()
+                ->addColumn('name', fn($row) => $row->name)
+                ->addColumn('principal', fn($row) => $row->principal_name)
+                ->addColumn('email', fn($row) => $row->email ?? '---')
+                ->addColumn('phone', fn($row) => $row->phone ?? '---')
+                ->addColumn('location', function ($row) {
+                    return $row->street_address . ', ' . $row->city . ', ' . $row->state . ' ' . $row->zip_code;
+                })
+                ->addColumn('students', fn($row) => $row->approximate_student_count ?? 'N/A')
+                ->addColumn('status', function ($row) {
+                    $statuses = ['pending' => 'secondary', 'approved' => 'success', 'cancelled' => 'danger'];
+                    $label = ucfirst($row->status);
+                    $color = $statuses[$row->status] ?? 'secondary';
+
+                    return '
+                <div class="dropdown">
+                    <button class="btn btn-' . $color . ' btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        ' . $label . '
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item change-status" href="#" data-id="' . $row->id . '" data-status="pending">Pending</a></li>
+                        <li><a class="dropdown-item change-status" href="#" data-id="' . $row->id . '" data-status="approved">Approved</a></li>
+                        <li><a class="dropdown-item change-status" href="#" data-id="' . $row->id . '" data-status="cancelled">Cancelled</a></li>
+                    </ul>
+                </div>';
+                })
+                ->addColumn('action', function ($row) {
+                    return '<button class="btn btn-primary btn-sm view-school" data-id="' . $row->id . '">
+                            <i class="fa fa-eye me-1"></i> View
+                            </button>';
+                })
+                ->rawColumns(['status', 'action'])
+                ->make();
         }
 
-        // Ensure only logged-in admin can approve
-        if (!auth()->check() || auth()->user()->role !== 'admin') {
-            return redirect()->route('login')->with('error', 'You must login as admin to approve.');
-        }
-
-        $school->update([
-            'status' => 'approved',
-            'approved_by' => auth()->id(),
-            'approved_at' => now(),
-            'approval_token' => null
-        ]);
-
-        return redirect()->route('dashboard')->with('success', 'School approved successfully.');
+        return view('backend.layouts.school.index');
     }
 
-    public function cancelFromEmail($token)
+    /**
+     * show school information
+     */
+    public function show(Request $request)
     {
-        $school = School::where('approval_token', $token)->firstOrFail();
+        try {
+            $schoolId = $request->id;
 
-        if ($school->status !== 'pending') {
-            return response()->json(['message' => 'This school is already ' . $school->status], 400);
+            // Get school details
+            $school = School::with('contact')->find($schoolId);
+            if (!$school) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No school found!'
+                ]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'school' => $school,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'School not found'
+            ], 404);
         }
+    }
 
-        if (!auth()->check() || auth()->user()->role !== 'admin') {
-            return redirect()->route('login')->with('error', 'You must login as admin to cancel.');
+
+    /**
+     * show status manage
+     */
+    public function status(Request $request, $id)
+    {
+        try {
+            $school = School::findOrFail($id);
+
+            // Validate the status
+            $validStatuses = ['pending', 'approved', 'cancelled'];
+            $newStatus = $request->status;
+
+            if (!in_array($newStatus, $validStatuses)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid status'
+                ], 422);
+            }
+
+            // Update the status
+            $school->status = $newStatus;
+
+            // Set approved/cancelled by and timestamp
+            if ($newStatus === 'approved') {
+                $school->approved_by = auth()->id();
+                $school->approved_at = now();
+                $school->cancelled_by = null;
+                $school->cancelled_at = null;
+            } elseif ($newStatus === 'cancelled') {
+                $school->cancelled_by = auth()->id();
+                $school->cancelled_at = now();
+                $school->approved_by = null;
+                $school->approved_at = null;
+            } else {
+                // For pending status, reset both
+                $school->approved_by = null;
+                $school->approved_at = null;
+                $school->cancelled_by = null;
+                $school->cancelled_at = null;
+            }
+
+            $school->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status updated successfully',
+                'status' => $school->status
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error updating status: ' . $e->getMessage()
+            ], 500);
         }
-
-        $school->update([
-            'status' => 'cancelled',
-            'cancelled_by' => auth()->id(),
-            'cancelled_at' => now(),
-            'approval_token' => null
-        ]);
-
-        return redirect()->route('dashboard')->with('success', 'School cancelled successfully.');
     }
 }

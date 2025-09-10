@@ -27,9 +27,9 @@ class School extends Model
 
 
     //relation with contact table
-    public function contacts()
+    public function contact()
     {
-        return $this->hasMany(Contact::class);
+        return $this->hasOne(Contact::class);
     }
 
 

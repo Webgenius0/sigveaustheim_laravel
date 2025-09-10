@@ -94,9 +94,20 @@
                                             </tr>
                                             <tr>
                                                 <td style="color:#555; padding:8px 0;"><strong>Location:</strong></td>
-                                                <td style="padding:8px 0;">{{ $school->city }}, {{ $school->state }}
+                                                <td style="padding:8px 0;">
+                                                    {{ $school->street_address }},
+                                                    {{ $school->city }},
+                                                    {{ $school->state }} {{ $school->zip_code }}
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td style="color:#555; padding:8px 0;"><strong>Number of
+                                                        students:</strong></td>
+                                                <td style="padding:8px 0;">
+                                                    {{ $school->approximate_student_count ?? 'N/A' }}
+                                                </td>
+                                            </tr>
+
                                         </table>
 
                                         <h2 style="margin:20px 0 15px; color:#7a2048; font-size:20px;">Teacher Details
@@ -130,54 +141,25 @@
                                                 <td align="center">
                                                     <table cellspacing="0" cellpadding="0"
                                                         style="display:inline-table;">
-                                                        {{-- <tr>
+                                                        <tr>
                                                             <!-- Approve Button -->
                                                             <td align="center" style="padding-right:10px;"
                                                                 class="mobile-stack">
-                                                                <form action="{{ route('admin.schools.approve') }}"
-                                                                    method="POST" style="margin:0;">
-                                                                    @csrf
-                                                                    <input type="hidden" name="approval_token"
-                                                                        value="{{ $school->approval_token }}">
-                                                                    <button type="submit"
-                                                                        style="background-color:transparent; color:#ffffff; padding:12px 30px; border:1px solid #7a2048; border-radius:5px; cursor:pointer; font-weight:bold; font-size:14px; background-color:#7a2048;">
-                                                                        Approve
-                                                                    </button>
-
-
-
-
-
-                                                                </form>
-
-
-
+                                                                <a href="{{ route('admin.schools.approve', $school->approval_token) }}"
+                                                                    style="background-color:transparent; color:#ffffff; padding:12px 30px; border:1px solid #7a2048; border-radius:5px; cursor:pointer; font-weight:bold; font-size:14px; background-color:#7a2048;">
+                                                                    Approve
+                                                                </a>
                                                             </td>
                                                             <!-- Cancel Button -->
                                                             <td align="center" style="padding-left:10px;"
                                                                 class="mobile-stack">
-                                                                <form action="{{ route('admin.schools.cancel') }}"
-                                                                    method="POST" style="margin:0;">
-                                                                    @csrf
-                                                                    <input type="hidden" name="approval_token"
-                                                                        value="{{ $school->approval_token }}">
-                                                                    <button type="submit" class="button-mobile"
-                                                                        style="background-color:#ffffff; color:#7a2048; padding:12px 30px; border:1px solid #7a2048; border-radius:5px; cursor:pointer; font-weight:bold; font-size:14px; min-width:120px;">
-                                                                        Cancel
-                                                                    </button>
-                                                                </form>
+                                                                <a href="{{ route('admin.schools.cancel', $school->approval_token) }}"
+                                                                    class="button-mobile"
+                                                                    style="background-color:#ffffff; color:#7a2048; padding:12px 30px; border:1px solid #7a2048; border-radius:5px; cursor:pointer; font-weight:bold; font-size:14px; min-width:120px;">
+                                                                    Cancel
+                                                                </a>
                                                             </td>
-                                                        </tr> --}}
-
-                                                        <a href="{{ route('admin.schools.approve', $school->approval_token) }}"
-                                                            style="background:#28a745;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;">
-                                                            Approve
-                                                        </a>
-
-                                                        <a href="{{ route('admin.schools.cancel', $school->approval_token) }}"
-                                                            style="background:#dc3545;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;">
-                                                            Cancel
-                                                        </a>
+                                                        </tr>
                                                     </table>
                                                 </td>
                                             </tr>

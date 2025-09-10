@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class SchoolTableSeeder extends Seeder
 {
@@ -24,6 +24,13 @@ class SchoolTableSeeder extends Seeder
                 'state' => 'CA',
                 'zip_code' => '90001',
                 'approximate_student_count' => 850,
+                'status' => 'pending',
+                'approved_by' => 1,
+                'approved_at' => now(),
+                'cancelled_by' => null,
+                'cancelled_at' => null,
+                'approval_token' => Str::uuid()->toString(),
+                'user_id' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -37,6 +44,13 @@ class SchoolTableSeeder extends Seeder
                 'state' => 'TX',
                 'zip_code' => '75001',
                 'approximate_student_count' => 1200,
+                'status' => 'pending',
+                'approved_by' => 1,
+                'approved_at' => now(),
+                'cancelled_by' => null,
+                'cancelled_at' => null,
+                'approval_token' => Str::uuid()->toString(),
+                'user_id' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -50,6 +64,13 @@ class SchoolTableSeeder extends Seeder
                 'state' => 'NY',
                 'zip_code' => '10001',
                 'approximate_student_count' => 640,
+                'status' => 'pending',
+                'approved_by' => 1,
+                'approved_at' => now(),
+                'cancelled_by' => null,
+                'cancelled_at' => null,
+                'approval_token' => Str::uuid()->toString(),
+                'user_id' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -63,6 +84,13 @@ class SchoolTableSeeder extends Seeder
                 'state' => 'FL',
                 'zip_code' => '32003',
                 'approximate_student_count' => 930,
+                'status' => 'pending',
+                'approved_by' => 1,
+                'approved_at' => now(),
+                'cancelled_by' => null,
+                'cancelled_at' => null,
+                'approval_token' => Str::uuid()->toString(),
+                'user_id' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -76,6 +104,13 @@ class SchoolTableSeeder extends Seeder
                 'state' => 'IL',
                 'zip_code' => '60007',
                 'approximate_student_count' => 1500,
+                'status' => 'pending',
+                'approved_by' => 1,
+                'approved_at' => now(),
+                'cancelled_by' => null,
+                'cancelled_at' => null,
+                'approval_token' => Str::uuid()->toString(),
+                'user_id' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
