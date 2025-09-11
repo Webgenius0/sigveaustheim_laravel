@@ -9,17 +9,18 @@ use App\Models\FitnessTests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Services\FlexibilityService;
+use App\Services\BalanceService;
 
-class FlexibilityController extends Controller
+class BalanceController extends Controller
 {
     use ApiResponse;
-    public function store(Request $request, FlexibilityService $flexibilityService)
+    public function store(Request $request, BalanceService $balanceService)
     {
         $user = auth('api')->user();
         if (!$user) {
             return $this->error(null, 'Unauthorized', 401);
         }
+
 
         // Check if user's school exists and is approved
         $school = $user->school;
@@ -30,25 +31,26 @@ class FlexibilityController extends Controller
         $request->validate([
             'student_id'      => 'required|exists:students,id',
             'fitness_test_id' => 'required|exists:fitness_tests,id',
-            'distance'        => 'required|numeric',
+            'duration'        => 'required|numeric|min:0',
         ]);
 
         $student = Student::findOrFail($request->student_id);
         $test = FitnessTests::findOrFail($request->fitness_test_id);
 
-        DB::transaction(function () use ($student, $test, $request, $flexibilityService, &$result) {
-            $result = $flexibilityService->calculatePoints($student, $request->distance);
+        DB::transaction(function () use ($student, $test, $request, $balanceService, &$result) {
+            $result = $balanceService->calculatePoints($student, $request->duration);
 
             TestScore::create([
                 'student_id'      => $student->id,
                 'fitness_test_id' => $test->id,
                 'tested_by'       => auth()->id(),
                 'score'           => $result['points'],
-                'data'            => $request->distance,
-                'unit'             => 'cm',
+                'data'            => $request->duration,
+                'unit'        => 'seconds',
                 'test_date'       => now(),
             ]);
         });
+
 
         return $this->success($result, 'Test score saved successfully');
     }

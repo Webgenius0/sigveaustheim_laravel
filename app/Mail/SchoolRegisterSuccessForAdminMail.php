@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 
-class AdminSchoolApprovalMail extends Mailable
+class SchoolRegisterSuccessForAdminMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -63,6 +63,6 @@ class AdminSchoolApprovalMail extends Mailable
     public function build()
     {
         return $this->subject('New School Registration - Approval Required')
-            ->view('emails.admin_school_approval');
+            ->view('emails.register_success_for_admin');
     }
 }

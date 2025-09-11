@@ -2,6 +2,7 @@
 
 namespace App\Helper;
 
+use DateTime;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -41,5 +42,19 @@ class Helper
             return unlink($filePath);
         }
         return false;
+    }
+
+     /**
+     * Helper function to calculate age from date_of_birth
+     */
+    public static function calculateAge($date_of_birth): int
+    {
+        if (!$date_of_birth) {
+            return 0;
+        }
+
+        $dob = new DateTime($date_of_birth);
+        $now = new DateTime();
+        return $now->diff($dob)->y;
     }
 }

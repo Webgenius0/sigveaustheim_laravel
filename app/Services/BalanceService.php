@@ -3,21 +3,17 @@
 namespace App\Services;
 
 use App\Helper\Helper;
-use DateTime;
 use App\Models\Student;
-use App\Models\AgilityTestRule;
+use App\Models\BalanceTestRule;
 
-class AgilityService
+class BalanceService
 {
     /**
      * Create a new class instance.
      */
-
-
     public function __construct()
     {
         //
-
     }
 
     public function calculatePoints(Student $student, $duration)
@@ -27,7 +23,7 @@ class AgilityService
 
 
         // Find matching rule
-        $rule = AgilityTestRule::where('gender', $student->gender)
+        $rule = BalanceTestRule::where('gender', $student->gender)
             ->where('age', $age)
             ->where('min_duration', '<=', $duration)
             ->where('max_duration', '>=', $duration)

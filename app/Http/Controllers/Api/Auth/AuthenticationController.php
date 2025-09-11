@@ -3,26 +3,19 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use Exception;
-use Carbon\Carbon;
 use App\Models\User;
 use App\Models\School;
 use App\Models\Contact;
 use App\Traits\ApiResponse;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Mail\TeacherPendingMail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\AdminSchoolApprovalMail;
-use Illuminate\Support\Facades\Cache;
 use App\Http\Requests\Auth\LoginRequest;
-use Illuminate\Support\Facades\Validator;
-use App\Http\Requests\Auth\OtpVerifyRequest;
 use App\Http\Requests\Auth\UserRegisterRequest;
+use App\Mail\SchoolRegisterSuccessForAdminMail;
+use App\Mail\SchoolRegisterSuccessForTeacherMail;
 
 class AuthenticationController extends Controller
 {
@@ -38,20 +31,30 @@ class AuthenticationController extends Controller
         try {
             $validatedData = $request->validated();
 
+            // Extra check: same contact email already linked to a school
+            if (Contact::where('email', $validatedData['contact_email'])->exists()) {
+                throw new Exception('This teacher/contact is already linked to a school.');
+            }
+
+            // Extra check: school name already taken
+            if (School::where('name', $validatedData['school_name'])->exists()) {
+                throw new Exception('This school name is already registered.');
+            }
+
             // User create first
             $user = User::create([
                 'username' => $validatedData['username'],
                 'email' => $validatedData['contact_email'],
                 'password' => bcrypt($validatedData['password']),
-                'role' => 'teacher', // teacher role
+                'role' => 'teacher',
             ]);
 
-            // Generate approval token for school
+            // Generate approval token
             $approvalToken = base64_encode(Str::random(40));
 
             // School create
             $school = School::create([
-                'user_id' => $user->id, // link user
+                'user_id' => $user->id,
                 'name' => $validatedData['school_name'],
                 'principal_name' => $validatedData['principal_name'],
                 'email' => $validatedData['school_email'],
@@ -76,20 +79,19 @@ class AuthenticationController extends Controller
 
             DB::commit();
 
-            // After creating $user, $school, $contact
+            // Email part
             $approveUrl = route('admin.schools.approve', ['token' => $school->approval_token]);
             $cancelUrl = route('admin.schools.cancel', ['token' => $school->approval_token]);
 
-            // Send email to admin
-            Mail::to('arifulislam6460@gmail.com')->send(new AdminSchoolApprovalMail($school, $approveUrl, $cancelUrl, $contact));
+            Mail::to('arifulislam6460@gmail.com')
+                ->send(new SchoolRegisterSuccessForAdminMail($school, $approveUrl, $cancelUrl, $contact));
 
-            // Send email to teacher
-            Mail::to($contact->email)->send(new TeacherPendingMail($contact, $school));
-
+            Mail::to($contact->email)
+                ->send(new SchoolRegisterSuccessForTeacherMail($contact, $school));
 
             return $this->success([
-                'user' => $user,
-                'school' => $school,
+                'user'    => $user,
+                'school'  => $school,
                 'contact' => $contact,
             ], 'Registration successful. Pending admin approval.', 201);
         } catch (Exception $e) {
@@ -115,6 +117,17 @@ class AuthenticationController extends Controller
                 return $this->error([], 'Invalid username or password.', 401);
             }
 
+            // Check role (must be teacher)
+            if ($user->role !== 'teacher') {
+                return $this->error([], 'Only teachers are allowed to login.', 403);
+            }
+
+            // Check if school is approved
+            $school = School::where('user_id', $user->id)->first();
+            if (!$school || $school->status !== 'approved') {
+                return $this->error([], 'Your school is not approved yet.', 403);
+            }
+
             // Auth attempt with username + password
             if (!($token = auth('api')->attempt([
                 'username' => $validatedData['username'],
@@ -128,16 +141,19 @@ class AuthenticationController extends Controller
                 'username' => $user->username,
                 'email'    => $user->email,
                 'role'     => $user->role,
+                'school'   => [
+                    'id'     => $school->id,
+                    'name'   => $school->name,
+                    'status' => $school->status,
+                ],
                 'token'    => $token,
             ];
 
             return $this->success($userData, 'Successfully logged in!', 200);
         } catch (Exception $e) {
-            Log::error($e->getMessage());
             return $this->error([], $e->getMessage(), 500);
         }
     }
-
 
     /*
     ** User logout

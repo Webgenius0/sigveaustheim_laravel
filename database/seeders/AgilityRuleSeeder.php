@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\AgilityTestRule;
 use Illuminate\Database\Seeder;
 
-class AgilitySeeder extends Seeder
+class AgilityRuleSeeder extends Seeder
 {
     /**
      * Run the database seeds.

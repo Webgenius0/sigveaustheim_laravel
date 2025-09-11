@@ -21,8 +21,9 @@ return new class extends Migration
             $table->foreign('fitness_test_id')->references('id')->on('fitness_tests')->onDelete('cascade');
             $table->foreign('tested_by')->references('id')->on('users')->onDelete('cascade');
 
+            $table->string('data')->nullable();
             $table->string('unit')->nullable();
-            $table->float('score');
+            $table->float('score')->nullable();
             $table->dateTime('test_date');
             $table->timestamps();
         });

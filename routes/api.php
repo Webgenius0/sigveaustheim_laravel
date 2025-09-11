@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\BalanceController;
 use App\Http\Controllers\Api\FlexibilityController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CMSDataController;
@@ -57,8 +58,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/fitness-tests', [FitnessTestController::class, 'index']);
     Route::get('/fitness-test/{id}', [FitnessTestController::class, 'show']);
 
-    Route::post('/agility-scores', [AgilityController::class, 'store']);
-    Route::post('/flexibility-scores', [FlexibilityController::class, 'store']);
-
-
+    // Test score manage
+    Route::post('/agility-test', [AgilityController::class, 'store']);
+    Route::post('/flexibility-test', [FlexibilityController::class, 'store']);
+    Route::post('/balance-test', [BalanceController::class, 'store']);
 });

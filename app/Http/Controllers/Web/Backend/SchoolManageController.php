@@ -4,8 +4,13 @@ namespace App\Http\Controllers\Web\Backend;
 
 use Exception;
 use App\Models\School;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SchoolCancelSuccessMail;
+use App\Mail\SchoolApprovelSuccessMail;
+use App\Mail\SchoolPendingSuccessMail;
 use Yajra\DataTables\Facades\DataTables;
 
 class SchoolManageController extends Controller
@@ -92,7 +97,6 @@ class SchoolManageController extends Controller
         }
     }
 
-
     /**
      * show status manage
      */
@@ -100,6 +104,7 @@ class SchoolManageController extends Controller
     {
         try {
             $school = School::findOrFail($id);
+            $teacher = Contact::where('school_id', $school->id)->first();
 
             // Validate the status
             $validStatuses = ['pending', 'approved', 'cancelled'];
@@ -115,23 +120,34 @@ class SchoolManageController extends Controller
             // Update the status
             $school->status = $newStatus;
 
-            // Set approved/cancelled by and timestamp
+            // Handle approved
             if ($newStatus === 'approved') {
                 $school->approved_by = auth()->id();
                 $school->approved_at = now();
                 $school->cancelled_by = null;
                 $school->cancelled_at = null;
-            } elseif ($newStatus === 'cancelled') {
+                $school->approval_token = null;
+
+                Mail::to($teacher->email)->send(new SchoolApprovelSuccessMail($teacher, $school));
+            }
+            // Handle cancelled
+            elseif ($newStatus === 'cancelled') {
                 $school->cancelled_by = auth()->id();
                 $school->cancelled_at = now();
                 $school->approved_by = null;
                 $school->approved_at = null;
-            } else {
-                // For pending status, reset both
+                $school->approval_token = null;
+
+                Mail::to($teacher->email)->send(new SchoolCancelSuccessMail($teacher, $school));
+            }
+            // Handle pending (renewal needed)
+            else {
                 $school->approved_by = null;
                 $school->approved_at = null;
                 $school->cancelled_by = null;
                 $school->cancelled_at = null;
+
+                Mail::to($teacher->email)->send(new SchoolPendingSuccessMail($teacher, $school));
             }
 
             $school->save();

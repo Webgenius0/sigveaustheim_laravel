@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helper\Helper;
 use DateTime;
 use App\Models\Student;
 use App\Models\FlexibilityTestRule;
@@ -20,8 +21,7 @@ class FlexibilityService
     public function calculatePoints(Student $student, $distance)
     {
         // Calculate age using helper method
-        $age = $this->calculateAge($student->date_of_birth);
-        // return $age;exit();
+        $age = Helper::calculateAge($student->date_of_birth);
 
         // Find matching rule
         $rule = FlexibilityTestRule::where('gender', $student->gender)
@@ -30,7 +30,6 @@ class FlexibilityService
             ->where('max_distance', '>=', $distance)
             ->first();
 
-        // return $rule;exit();
 
         if (!$rule) {
             return [
@@ -43,19 +42,5 @@ class FlexibilityService
             'points' => $rule->points,
             'comment' => "Scored {$rule->points} points for {$distance} cm",
         ];
-    }
-
-    /**
-     * Helper function to calculate age from date_of_birth
-     */
-    private function calculateAge($date_of_birth): int
-    {
-        if (!$date_of_birth) {
-            return 0;
-        }
-
-        $dob = new DateTime($date_of_birth);
-        $now = new DateTime();
-        return $now->diff($dob)->y;
     }
 }

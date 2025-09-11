@@ -21,6 +21,12 @@ class AgilityController extends Controller
             return $this->error(null, 'Unauthorized', 401);
         }
 
+        // Check if user's school exists and is approved
+        $school = $user->school;
+        if (!$school || $school->status !== 'approved') {
+            return $this->error(null, 'Your school is not approved. You cannot perform this test.', 403);
+        }
+
         $request->validate([
             'student_id'      => 'required|exists:students,id',
             'fitness_test_id' => 'required|exists:fitness_tests,id',
@@ -38,11 +44,11 @@ class AgilityController extends Controller
                 'fitness_test_id' => $test->id,
                 'tested_by'       => auth()->id(),
                 'score'           => $result['points'],
-                'unit'        => 'seconds',
+                'data'            => $request->duration,
+                'unit'            => 'seconds',
                 'test_date'       => now(),
             ]);
         });
-
 
         return $this->success($result, 'Test score saved successfully');
     }

@@ -71,6 +71,16 @@
         </div>
     </div>
 
+    {{-- Loader --}}
+    <!-- Loader Overlay -->
+    <div id="ajax-loader"
+        style="display:none; position:fixed; top:0; left:0;
+    width:100%; height:100%; background:rgba(255,255,255,0.7);
+    z-index:9999; text-align:center;">
+        <img src="{{ asset('default/loader.gif') }}" alt="Loading..." style="margin-top:20%;">
+    </div>
+
+
     <!-- School Details Modal -->
     <div class="modal fade" id="schoolModal" tabindex="-1" aria-labelledby="schoolModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -230,6 +240,12 @@
                     data: {
                         id: schoolId
                     },
+
+                    beforeSend: function() {
+                        // Loader show
+                        $('#ajax-loader').show();
+                    },
+
                     success: function(response) {
                         if (response.success) {
                             // Populate school information
@@ -287,12 +303,16 @@
                     error: function(xhr) {
                         alert('Error fetching school details');
                         console.error(xhr);
+                    },
+
+                    // Loader hide always (success or error)
+                    complete: function() {
+                        $('#ajax-loader').hide();
                     }
                 });
             });
 
 
-            // Handle school status
             // Handle school status
             $(document).on('click', '.change-status', function(e) {
                 e.preventDefault();
@@ -301,41 +321,64 @@
                 let status = $(this).data('status');
                 let button = $(this);
 
-                // Show loading state
-                button.html('<i class="fas fa-spinner fa-spin"></i>');
+                // SweetAlert confirmation
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You are about to change status to '" + status + "'.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, change it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Show loading state on button
+                        button.html('<i class="fas fa-spinner fa-spin"></i>');
 
-                $.ajax({
-                    // url: 'admin/school/status/' + id,
-                    url: '{{ route('school.status', '') }}/' + id,
+                        $.ajax({
+                            url: '{{ route('school.status', '') }}/' + id,
+                            type: 'POST',
+                            data: {
+                                status: status,
+                                _token: '{{ csrf_token() }}'
+                            },
 
-                    type: 'POST',
-                    data: {
-                        status: status,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(res) {
-                        if (res.success) {
-                            toastr.success(res.message);
-                            $('#schoolTable').DataTable().ajax.reload(null,
-                            false); // reload without page reset
-                        } else {
-                            toastr.error(res.message);
-                            button.closest('.dropdown-menu').find('.dropdown-toggle').dropdown(
-                                'toggle');
-                        }
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 404) {
-                            toastr.error(
-                                "Route not found. Please check your route configuration.");
-                        } else {
-                            toastr.error("Failed to update status.");
-                        }
-                        console.error(xhr);
-                    },
-                    complete: function() {
-                        // Reset button text
-                        button.html(status.charAt(0).toUpperCase() + status.slice(1));
+                            // Loader show
+                            beforeSend: function() {
+                                $('#ajax-loader').show();
+                            },
+
+                            success: function(res) {
+                                if (res.success) {
+                                    toastr.success(res.message);
+                                    $('#schoolTable').DataTable().ajax.reload(null,
+                                        false);
+                                } else {
+                                    toastr.error(res.message);
+                                    button.closest('.dropdown-menu')
+                                        .find('.dropdown-toggle')
+                                        .dropdown('toggle');
+                                }
+                            },
+                            error: function(xhr) {
+                                if (xhr.status === 404) {
+                                    toastr.error(
+                                        "Route not found. Please check your route configuration."
+                                    );
+                                } else {
+                                    toastr.error("Failed to update status.");
+                                }
+                                console.error(xhr);
+                            },
+                            complete: function() {
+                                // Reset button text
+                                button.html(status.charAt(0).toUpperCase() + status
+                                    .slice(1));
+
+                                // Loader hide always (success or error)
+                                $('#ajax-loader').hide();
+                            }
+                        });
                     }
                 });
             });

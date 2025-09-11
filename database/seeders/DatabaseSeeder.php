@@ -21,8 +21,9 @@ class DatabaseSeeder extends Seeder
             CmsSeeder::class,
             StudentSeeder::class,
             FitnessTestSeeder::class,
-            AgilitySeeder::class,
-            FlexibilitySeeder::class
+            AgilityRuleSeeder::class,
+            FlexibilityRuleSeeder::class,
+            BalanceRuleSeeder::class
         ]);
     }
 }

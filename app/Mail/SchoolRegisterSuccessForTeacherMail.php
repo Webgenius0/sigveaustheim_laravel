@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class TeacherPendingMail extends Mailable
+class SchoolRegisterSuccessForTeacherMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -39,16 +39,6 @@ class TeacherPendingMail extends Mailable
     }
 
     /**
-     * Get the message content definition.
-     */
-    // public function content(): Content
-    // {
-    //     return new Content(
-    //         view: 'view.name',
-    //     );
-    // }
-
-    /**
      * Get the attachments for the message.
      *
      * @return array<int, \Illuminate\Mail\Mailables\Attachment>
@@ -61,6 +51,6 @@ class TeacherPendingMail extends Mailable
     public function build()
     {
         return $this->subject('Welcome! Your School Registration is Pending')
-            ->view('emails.teacher_pending');
+            ->view('emails.register_success_for_teacher');
     }
 }

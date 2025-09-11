@@ -15,7 +15,7 @@ class UserRegisterRequest extends FormRequest
     {
         return [
             // School Info
-            'school_name' => ['required', 'string', 'max:100'],
+            'school_name' => ['required', 'string', 'max:100', 'unique:schools,name'],
             'principal_name' => ['required', 'string', 'max:100'],
             'school_email' => ['required', 'string', 'email', 'max:100', 'unique:schools,email'],
             'school_phone' => ['required', 'string', 'max:20'],
@@ -27,7 +27,7 @@ class UserRegisterRequest extends FormRequest
 
             // Contact Info
             'contact_name' => ['required', 'string', 'max:100'],
-            'contact_email' => ['required', 'string', 'email', 'max:100'],
+            'contact_email' => ['required', 'string', 'email', 'max:100', 'unique:contacts,email'],
             'contact_phone' => ['nullable', 'string', 'max:20'],
 
             // User Info
@@ -35,6 +35,7 @@ class UserRegisterRequest extends FormRequest
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
+
 
     public function messages(): array
     {

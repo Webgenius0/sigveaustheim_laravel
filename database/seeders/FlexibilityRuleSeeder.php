@@ -6,7 +6,7 @@ use App\Models\FlexibilityTestRule;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class FlexibilitySeeder extends Seeder
+class FlexibilityRuleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
