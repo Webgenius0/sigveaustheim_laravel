@@ -3,33 +3,35 @@
 namespace App\Services;
 
 use App\Helper\Helper;
-use DateTime;
 use App\Models\Student;
-use App\Models\FlexibilityTestRule;
+use App\Models\AgilityTestRule;
+use App\Models\ReactionTestRule;
 
-class FlexibilityService
+class ReactionService
 {
     /**
      * Create a new class instance.
      */
+
+
     public function __construct()
     {
         //
+
     }
 
-
-    public function calculatePoints(Student $student, $distance)
+    public function calculatePoints(Student $student, $duration)
     {
         // Calculate age using helper method
         $age = Helper::calculateAge($student->date_of_birth);
 
-        // Find matching rule
-        $rule = FlexibilityTestRule::where('gender', $student->gender)
-            ->where('age', $age)
-            ->where('min_distance', '<=', $distance)
-            ->where('max_distance', '>=', $distance)
-            ->first();
 
+        // Find matching rule
+        $rule = ReactionTestRule::where('gender', $student->gender)
+            ->where('age', $age)
+            ->where('min_duration', '<=', $duration)
+            ->where('max_duration', '>=', $duration)
+            ->first();
 
         if (!$rule) {
             return [
@@ -43,7 +45,7 @@ class FlexibilityService
             'age' => $age,
             'gender' => $student->gender,
             'points' => $rule->points,
-            'comment' => "Scored {$rule->points} points for {$distance} cm",
+            'comment' => "Scored {$rule->points} points in {$duration} seconds",
         ];
     }
 }

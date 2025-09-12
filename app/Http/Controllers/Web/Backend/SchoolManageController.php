@@ -39,6 +39,25 @@ class SchoolManageController extends Controller
                     return $row->street_address . ', ' . $row->city . ', ' . $row->state . ' ' . $row->zip_code;
                 })
                 ->addColumn('students', fn($row) => $row->approximate_student_count ?? 'N/A')
+
+                // Published Date column
+                ->addColumn('published_date', function ($row) {
+                    return $row->created_at
+                        ? $row->created_at->format('d M Y h:i A')
+                        : '---';
+                })
+
+                // Subscription Days Left column
+                ->addColumn('subscription_days_left', function ($row) {
+                    if (!$row->created_at) return 0;
+
+                    $daysPassed = $row->created_at->diffInDays(now());
+                    $daysLeft = max(0, 365 - $daysPassed);
+
+                    return (int) $daysLeft;
+                })
+
+
                 ->addColumn('status', function ($row) {
                     $statuses = ['pending' => 'secondary', 'approved' => 'success', 'cancelled' => 'danger'];
                     $label = ucfirst($row->status);

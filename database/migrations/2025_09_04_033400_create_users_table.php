@@ -19,13 +19,15 @@ return new class extends Migration
             $table->string('email', 100)->nullable();
             $table->string('avatar')->nullable();
 
-
             $table->string('otp')->nullable();
             $table->timestamp('otp_expires_at')->nullable();
 
             $table->string('reset_password_token')->nullable();
             $table->timestamp('reset_password_token_expire_at')->nullable();
 
+            $table->timestamp('email_verified_at')->nullable();
+            $table->boolean('is_email_verified')->default(false);
+            $table->string('verification_token')->nullable()->unique();
 
             $table->timestamps();
         });

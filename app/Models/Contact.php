@@ -13,4 +13,10 @@ class Contact extends Model
         'phone',
         'role',
     ];
+
+    // hidden property
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 }

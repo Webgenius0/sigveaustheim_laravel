@@ -25,6 +25,12 @@ class School extends Model
         'user_id',
     ];
 
+    //hidden property
+    protected $hidden = [
+        'updated_at',
+        'approval_token'
+    ];
+
 
     //relation with contact table
     public function contact()

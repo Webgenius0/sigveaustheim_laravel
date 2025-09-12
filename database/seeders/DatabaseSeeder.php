@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,7 +21,9 @@ class DatabaseSeeder extends Seeder
             FitnessTestSeeder::class,
             AgilityRuleSeeder::class,
             FlexibilityRuleSeeder::class,
-            BalanceRuleSeeder::class
+            BalanceRuleSeeder::class,
+            CoordinationRuleSeeder::class,
+            ReactionRuleSeeder::class
         ]);
     }
 }

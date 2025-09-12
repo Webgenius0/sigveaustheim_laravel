@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Mail\TeacherEmailVerificationMail;
 use App\Http\Requests\Auth\UserRegisterRequest;
 use App\Mail\SchoolRegisterSuccessForAdminMail;
 use App\Mail\SchoolRegisterSuccessForTeacherMail;
@@ -41,12 +42,17 @@ class AuthenticationController extends Controller
                 throw new Exception('This school name is already registered.');
             }
 
+            // Create user with email unverified
+            $verificationToken = base64_encode(Str::random(40));
+
             // User create first
             $user = User::create([
                 'username' => $validatedData['username'],
                 'email' => $validatedData['contact_email'],
                 'password' => bcrypt($validatedData['password']),
                 'role' => 'teacher',
+                'email_verified_at' => null,
+                'verification_token' => $verificationToken,
             ]);
 
             // Generate approval token
@@ -79,21 +85,18 @@ class AuthenticationController extends Controller
 
             DB::commit();
 
-            // Email part
-            $approveUrl = route('admin.schools.approve', ['token' => $school->approval_token]);
-            $cancelUrl = route('admin.schools.cancel', ['token' => $school->approval_token]);
 
-            Mail::to('arifulislam6460@gmail.com')
-                ->send(new SchoolRegisterSuccessForAdminMail($school, $approveUrl, $cancelUrl, $contact));
+            // Send email verification mail
+            $verificationUrl = route('verify.email', ['token' => $verificationToken]);
 
-            Mail::to($contact->email)
-                ->send(new SchoolRegisterSuccessForTeacherMail($contact, $school));
+            Mail::to($user->email)
+                ->send(new TeacherEmailVerificationMail($user, $verificationUrl));
 
             return $this->success([
                 'user'    => $user,
                 'school'  => $school,
                 'contact' => $contact,
-            ], 'Registration successful. Pending admin approval.', 201);
+            ], 'Registration successful. Please verify your email to continue.', 201);
         } catch (Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
@@ -101,6 +104,39 @@ class AuthenticationController extends Controller
             return $this->error([], 'Something went wrong: ' . $e->getMessage(), 500);
         }
     }
+
+    /**
+     *  Verify teacher email
+     */
+    public function verifyEmail($token)
+    {
+        $user = User::where('verification_token', $token)->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'Invalid verification token.'], 400);
+        }
+
+        $user->email_verified_at = now();
+        $user->is_email_verified = true;
+        $user->verification_token = null; // clear token
+        $user->save();
+
+        // admin approval email
+        $school = $user->school;
+        $contact = Contact::where('school_id', $school->id)->first();
+
+        $approveUrl = route('admin.schools.approve', ['token' => $school->approval_token]);
+        $cancelUrl = route('admin.schools.cancel', ['token' => $school->approval_token]);
+
+        Mail::to('admin@example.com')
+            ->send(new SchoolRegisterSuccessForAdminMail($school, $approveUrl, $cancelUrl, $contact));
+
+        Mail::to($contact->email)
+            ->send(new SchoolRegisterSuccessForTeacherMail($contact, $school));
+
+        return response()->json(['message' => 'Email verified successfully. Please wait for school approval.']);
+    }
+
 
     /*
     ** User login
@@ -120,6 +156,11 @@ class AuthenticationController extends Controller
             // Check role (must be teacher)
             if ($user->role !== 'teacher') {
                 return $this->error([], 'Only teachers are allowed to login.', 403);
+            }
+
+            // Check if email is verified
+            if ($user->is_email_verified === false || $user->email_verified_at === null) {
+                return $this->error([], 'Your email is not verified!.', 403);
             }
 
             // Check if school is approved

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BalanceController;
+use App\Http\Controllers\Api\CoordinationController;
 use App\Http\Controllers\Api\FlexibilityController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CMSDataController;
@@ -10,6 +11,8 @@ use App\Http\Controllers\Api\Auth\UserProfileController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\Auth\AuthenticationController;
 use App\Http\Controllers\Api\AgilityController;
+use App\Http\Controllers\Api\PowerController;
+use App\Http\Controllers\Api\ReactionController;
 
 //health-check
 Route::get("/check", function () {
@@ -22,6 +25,8 @@ Route::group(['middleware' => 'guest:api'], function () {
     // Login & Register
     Route::post('/login', [AuthenticationController::class, 'login']);
     Route::post('/register', [AuthenticationController::class, 'register']);
+
+
 
     // Password Reset
     Route::post('/forgot-password', [ResetPasswordController::class, 'forgotPassword']);
@@ -62,4 +67,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/agility-test', [AgilityController::class, 'store']);
     Route::post('/flexibility-test', [FlexibilityController::class, 'store']);
     Route::post('/balance-test', [BalanceController::class, 'store']);
+    Route::post('/coordination-test', [CoordinationController::class, 'store']);
+    Route::post('/reaction-test', [ReactionController::class, 'store']);
+    Route::post('/power-test', [PowerController::class, 'store']);
 });

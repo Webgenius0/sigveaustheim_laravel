@@ -3,11 +3,12 @@
 namespace App\Services;
 
 use App\Helper\Helper;
+use App\Models\PowerTestRule;
 use DateTime;
 use App\Models\Student;
 use App\Models\FlexibilityTestRule;
 
-class FlexibilityService
+class PowerService
 {
     /**
      * Create a new class instance.
@@ -24,7 +25,7 @@ class FlexibilityService
         $age = Helper::calculateAge($student->date_of_birth);
 
         // Find matching rule
-        $rule = FlexibilityTestRule::where('gender', $student->gender)
+        $rule = PowerTestRule::where('gender', $student->gender)
             ->where('age', $age)
             ->where('min_distance', '<=', $distance)
             ->where('max_distance', '>=', $distance)

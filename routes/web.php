@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\Api\Auth\AuthenticationController;
 use App\Http\Controllers\Api\React\User\Auth\SocialLoginController;
 
 
@@ -97,6 +98,9 @@ Route::get('/run-storage-link', function () {
     }
 });
 
+
+// teacher email verification
+Route::get('/verify-email/{token}', [AuthenticationController::class, 'verifyEmail'])->name('verify.email');
 
 //Social login test routes
 

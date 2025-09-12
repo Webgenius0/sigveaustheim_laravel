@@ -29,7 +29,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 18, 'gender' => 'male', 'min_duration' => 71, 'max_duration' => 75, 'points' => 7],
             ['age' => 18, 'gender' => 'male', 'min_duration' => 76, 'max_duration' => 80, 'points' => 8],
             ['age' => 18, 'gender' => 'male', 'min_duration' => 81, 'max_duration' => 85, 'points' => 9],
-            ['age' => 18, 'gender' => 'male', 'min_duration' => 86, 'max_duration' => 999, 'points' => 10],
+            ['age' => 18, 'gender' => 'male', 'min_duration' => 86, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 17 and gender male
@@ -43,7 +43,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 17, 'gender' => 'male', 'min_duration' => 68, 'max_duration' => 72, 'points' => 7],
             ['age' => 17, 'gender' => 'male', 'min_duration' => 73, 'max_duration' => 77, 'points' => 8],
             ['age' => 17, 'gender' => 'male', 'min_duration' => 78, 'max_duration' => 82, 'points' => 9],
-            ['age' => 17, 'gender' => 'male', 'min_duration' => 83, 'max_duration' => 999, 'points' => 10],
+            ['age' => 17, 'gender' => 'male', 'min_duration' => 83, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 16 and gender male
@@ -57,7 +57,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 16, 'gender' => 'male', 'min_duration' => 65, 'max_duration' => 69, 'points' => 7],
             ['age' => 16, 'gender' => 'male', 'min_duration' => 70, 'max_duration' => 74, 'points' => 8],
             ['age' => 16, 'gender' => 'male', 'min_duration' => 75, 'max_duration' => 79, 'points' => 9],
-            ['age' => 16, 'gender' => 'male', 'min_duration' => 80, 'max_duration' => 999, 'points' => 10],
+            ['age' => 16, 'gender' => 'male', 'min_duration' => 80, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 15 and gender male
@@ -71,7 +71,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 15, 'gender' => 'male', 'min_duration' => 62, 'max_duration' => 66, 'points' => 7],
             ['age' => 15, 'gender' => 'male', 'min_duration' => 67, 'max_duration' => 71, 'points' => 8],
             ['age' => 15, 'gender' => 'male', 'min_duration' => 72, 'max_duration' => 76, 'points' => 9],
-            ['age' => 15, 'gender' => 'male', 'min_duration' => 77, 'max_duration' => 999, 'points' => 10],
+            ['age' => 15, 'gender' => 'male', 'min_duration' => 77, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 14 and gender male
@@ -85,7 +85,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 14, 'gender' => 'male', 'min_duration' => 59, 'max_duration' => 63, 'points' => 7],
             ['age' => 14, 'gender' => 'male', 'min_duration' => 64, 'max_duration' => 68, 'points' => 8],
             ['age' => 14, 'gender' => 'male', 'min_duration' => 69, 'max_duration' => 73, 'points' => 9],
-            ['age' => 14, 'gender' => 'male', 'min_duration' => 74, 'max_duration' => 999, 'points' => 10],
+            ['age' => 14, 'gender' => 'male', 'min_duration' => 74, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 13 and gender male
@@ -99,7 +99,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 13, 'gender' => 'male', 'min_duration' => 56, 'max_duration' => 60, 'points' => 7],
             ['age' => 13, 'gender' => 'male', 'min_duration' => 61, 'max_duration' => 65, 'points' => 8],
             ['age' => 13, 'gender' => 'male', 'min_duration' => 66, 'max_duration' => 70, 'points' => 9],
-            ['age' => 13, 'gender' => 'male', 'min_duration' => 71, 'max_duration' => 999, 'points' => 10],
+            ['age' => 13, 'gender' => 'male', 'min_duration' => 71, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 12 and gender male
@@ -113,7 +113,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 12, 'gender' => 'male', 'min_duration' => 53, 'max_duration' => 57, 'points' => 7],
             ['age' => 12, 'gender' => 'male', 'min_duration' => 58, 'max_duration' => 62, 'points' => 8],
             ['age' => 12, 'gender' => 'male', 'min_duration' => 63, 'max_duration' => 67, 'points' => 9],
-            ['age' => 12, 'gender' => 'male', 'min_duration' => 68, 'max_duration' => 999, 'points' => 10],
+            ['age' => 12, 'gender' => 'male', 'min_duration' => 68, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 11 and gender male
@@ -127,7 +127,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 11, 'gender' => 'male', 'min_duration' => 50, 'max_duration' => 54, 'points' => 7],
             ['age' => 11, 'gender' => 'male', 'min_duration' => 55, 'max_duration' => 59, 'points' => 8],
             ['age' => 11, 'gender' => 'male', 'min_duration' => 60, 'max_duration' => 64, 'points' => 9],
-            ['age' => 11, 'gender' => 'male', 'min_duration' => 65, 'max_duration' => 999, 'points' => 10],
+            ['age' => 11, 'gender' => 'male', 'min_duration' => 65, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 10 and gender male
@@ -141,7 +141,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 10, 'gender' => 'male', 'min_duration' => 47, 'max_duration' => 51, 'points' => 7],
             ['age' => 10, 'gender' => 'male', 'min_duration' => 52, 'max_duration' => 56, 'points' => 8],
             ['age' => 10, 'gender' => 'male', 'min_duration' => 57, 'max_duration' => 61, 'points' => 9],
-            ['age' => 10, 'gender' => 'male', 'min_duration' => 62, 'max_duration' => 999, 'points' => 10],
+            ['age' => 10, 'gender' => 'male', 'min_duration' => 62, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 9 and gender male
@@ -155,7 +155,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 9, 'gender' => 'male', 'min_duration' => 44, 'max_duration' => 48, 'points' => 7],
             ['age' => 9, 'gender' => 'male', 'min_duration' => 49, 'max_duration' => 53, 'points' => 8],
             ['age' => 9, 'gender' => 'male', 'min_duration' => 54, 'max_duration' => 58, 'points' => 9],
-            ['age' => 9, 'gender' => 'male', 'min_duration' => 59, 'max_duration' => 999, 'points' => 10],
+            ['age' => 9, 'gender' => 'male', 'min_duration' => 59, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 8 and gender male
@@ -169,7 +169,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 8, 'gender' => 'male', 'min_duration' => 41, 'max_duration' => 45, 'points' => 7],
             ['age' => 8, 'gender' => 'male', 'min_duration' => 46, 'max_duration' => 50, 'points' => 8],
             ['age' => 8, 'gender' => 'male', 'min_duration' => 51, 'max_duration' => 55, 'points' => 9],
-            ['age' => 8, 'gender' => 'male', 'min_duration' => 56, 'max_duration' => 999, 'points' => 10],
+            ['age' => 8, 'gender' => 'male', 'min_duration' => 56, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 7 and gender male
@@ -183,7 +183,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 7, 'gender' => 'male', 'min_duration' => 38, 'max_duration' => 42, 'points' => 7],
             ['age' => 7, 'gender' => 'male', 'min_duration' => 43, 'max_duration' => 47, 'points' => 8],
             ['age' => 7, 'gender' => 'male', 'min_duration' => 48, 'max_duration' => 52, 'points' => 9],
-            ['age' => 7, 'gender' => 'male', 'min_duration' => 53, 'max_duration' => 999, 'points' => 10],
+            ['age' => 7, 'gender' => 'male', 'min_duration' => 53, 'max_duration' => 99, 'points' => 10],
 
 
             /**
@@ -201,7 +201,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 18, 'gender' => 'female', 'min_duration' => 56, 'max_duration' => 60, 'points' => 7],
             ['age' => 18, 'gender' => 'female', 'min_duration' => 61, 'max_duration' => 65, 'points' => 8],
             ['age' => 18, 'gender' => 'female', 'min_duration' => 66, 'max_duration' => 70, 'points' => 9],
-            ['age' => 18, 'gender' => 'female', 'min_duration' => 71, 'max_duration' => 999, 'points' => 10],
+            ['age' => 18, 'gender' => 'female', 'min_duration' => 71, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 17 and gender female
@@ -215,7 +215,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 17, 'gender' => 'female', 'min_duration' => 54, 'max_duration' => 58, 'points' => 7],
             ['age' => 17, 'gender' => 'female', 'min_duration' => 59, 'max_duration' => 63, 'points' => 8],
             ['age' => 17, 'gender' => 'female', 'min_duration' => 64, 'max_duration' => 68, 'points' => 9],
-            ['age' => 17, 'gender' => 'female', 'min_duration' => 69, 'max_duration' => 999, 'points' => 10],
+            ['age' => 17, 'gender' => 'female', 'min_duration' => 69, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 16 and gender female
@@ -229,7 +229,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 16, 'gender' => 'female', 'min_duration' => 52, 'max_duration' => 56, 'points' => 7],
             ['age' => 16, 'gender' => 'female', 'min_duration' => 57, 'max_duration' => 61, 'points' => 8],
             ['age' => 16, 'gender' => 'female', 'min_duration' => 62, 'max_duration' => 66, 'points' => 9],
-            ['age' => 16, 'gender' => 'female', 'min_duration' => 67, 'max_duration' => 999, 'points' => 10],
+            ['age' => 16, 'gender' => 'female', 'min_duration' => 67, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 15 and gender female
@@ -243,7 +243,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 15, 'gender' => 'female', 'min_duration' => 50, 'max_duration' => 54, 'points' => 7],
             ['age' => 15, 'gender' => 'female', 'min_duration' => 55, 'max_duration' => 59, 'points' => 8],
             ['age' => 15, 'gender' => 'female', 'min_duration' => 60, 'max_duration' => 64, 'points' => 9],
-            ['age' => 15, 'gender' => 'female', 'min_duration' => 65, 'max_duration' => 999, 'points' => 10],
+            ['age' => 15, 'gender' => 'female', 'min_duration' => 65, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 14 and gender female
@@ -257,7 +257,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 14, 'gender' => 'female', 'min_duration' => 48, 'max_duration' => 52, 'points' => 7],
             ['age' => 14, 'gender' => 'female', 'min_duration' => 53, 'max_duration' => 57, 'points' => 8],
             ['age' => 14, 'gender' => 'female', 'min_duration' => 58, 'max_duration' => 62, 'points' => 9],
-            ['age' => 14, 'gender' => 'female', 'min_duration' => 63, 'max_duration' => 999, 'points' => 10],
+            ['age' => 14, 'gender' => 'female', 'min_duration' => 63, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 13 and gender female
@@ -271,7 +271,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 13, 'gender' => 'female', 'min_duration' => 46, 'max_duration' => 50, 'points' => 7],
             ['age' => 13, 'gender' => 'female', 'min_duration' => 51, 'max_duration' => 55, 'points' => 8],
             ['age' => 13, 'gender' => 'female', 'min_duration' => 56, 'max_duration' => 60, 'points' => 9],
-            ['age' => 13, 'gender' => 'female', 'min_duration' => 61, 'max_duration' => 999, 'points' => 10],
+            ['age' => 13, 'gender' => 'female', 'min_duration' => 61, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 12 and gender female
@@ -285,7 +285,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 12, 'gender' => 'female', 'min_duration' => 44, 'max_duration' => 48, 'points' => 7],
             ['age' => 12, 'gender' => 'female', 'min_duration' => 49, 'max_duration' => 53, 'points' => 8],
             ['age' => 12, 'gender' => 'female', 'min_duration' => 54, 'max_duration' => 58, 'points' => 9],
-            ['age' => 12, 'gender' => 'female', 'min_duration' => 59, 'max_duration' => 999, 'points' => 10],
+            ['age' => 12, 'gender' => 'female', 'min_duration' => 59, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 11 and gender female
@@ -299,7 +299,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 11, 'gender' => 'female', 'min_duration' => 42, 'max_duration' => 46, 'points' => 7],
             ['age' => 11, 'gender' => 'female', 'min_duration' => 47, 'max_duration' => 51, 'points' => 8],
             ['age' => 11, 'gender' => 'female', 'min_duration' => 52, 'max_duration' => 56, 'points' => 9],
-            ['age' => 11, 'gender' => 'female', 'min_duration' => 57, 'max_duration' => 999, 'points' => 10],
+            ['age' => 11, 'gender' => 'female', 'min_duration' => 57, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 10 and gender female
@@ -313,7 +313,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 10, 'gender' => 'female', 'min_duration' => 40, 'max_duration' => 44, 'points' => 7],
             ['age' => 10, 'gender' => 'female', 'min_duration' => 45, 'max_duration' => 49, 'points' => 8],
             ['age' => 10, 'gender' => 'female', 'min_duration' => 50, 'max_duration' => 54, 'points' => 9],
-            ['age' => 10, 'gender' => 'female', 'min_duration' => 55, 'max_duration' => 999, 'points' => 10],
+            ['age' => 10, 'gender' => 'female', 'min_duration' => 55, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 9 and gender female
@@ -327,7 +327,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 9, 'gender' => 'female', 'min_duration' => 38, 'max_duration' => 42, 'points' => 7],
             ['age' => 9, 'gender' => 'female', 'min_duration' => 43, 'max_duration' => 47, 'points' => 8],
             ['age' => 9, 'gender' => 'female', 'min_duration' => 48, 'max_duration' => 52, 'points' => 9],
-            ['age' => 9, 'gender' => 'female', 'min_duration' => 53, 'max_duration' => 999, 'points' => 10],
+            ['age' => 9, 'gender' => 'female', 'min_duration' => 53, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 8 and gender female
@@ -341,7 +341,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 8, 'gender' => 'female', 'min_duration' => 36, 'max_duration' => 40, 'points' => 7],
             ['age' => 8, 'gender' => 'female', 'min_duration' => 41, 'max_duration' => 45, 'points' => 8],
             ['age' => 8, 'gender' => 'female', 'min_duration' => 46, 'max_duration' => 50, 'points' => 9],
-            ['age' => 8, 'gender' => 'female', 'min_duration' => 51, 'max_duration' => 999, 'points' => 10],
+            ['age' => 8, 'gender' => 'female', 'min_duration' => 51, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 7 and gender female
@@ -355,7 +355,7 @@ class BalanceRuleSeeder extends Seeder
             ['age' => 7, 'gender' => 'female', 'min_duration' => 34, 'max_duration' => 38, 'points' => 7],
             ['age' => 7, 'gender' => 'female', 'min_duration' => 39, 'max_duration' => 43, 'points' => 8],
             ['age' => 7, 'gender' => 'female', 'min_duration' => 44, 'max_duration' => 48, 'points' => 9],
-            ['age' => 7, 'gender' => 'female', 'min_duration' => 49, 'max_duration' => 999, 'points' => 10],
+            ['age' => 7, 'gender' => 'female', 'min_duration' => 49, 'max_duration' => 99, 'points' => 10],
         ];
 
         foreach ($rules as $rule) {

@@ -65,6 +65,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     //school manage form dashobard
     Route::get('/school/list', [SchoolManageController::class, 'index'])->name('schools.list');
     Route::get('/school/show', [SchoolManageController::class, 'show'])->name('school.show');
+    
     // Route::get('/school/status/{id}', [SchoolManageController::class, 'status'])->name('school.status');
     Route::post('/school/status/{id}', [SchoolManageController::class, 'status'])->name('school.status');
 });

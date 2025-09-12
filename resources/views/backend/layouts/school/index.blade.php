@@ -53,6 +53,8 @@
                                                 <th>Phone</th>
                                                 <th>Location</th>
                                                 <th>Students</th>
+                                                <th>Publish Date</th>
+                                                <th>Days Left</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -146,7 +148,7 @@
                 let table = $('#schoolTable').DataTable({
                     processing: true,
                     serverSide: true,
-                    responsive: true,
+                    // responsive: true,
                     order: [],
                     lengthMenu: [
                         [10, 25, 50, 100, -1],
@@ -193,6 +195,14 @@
                         {
                             data: 'students',
                             name: 'students'
+                        },
+                        {
+                            data: 'published_date',
+                            name: 'published_date'
+                        },
+                        {
+                            data: 'subscription_days_left',
+                            name: 'subscription_days_left'
                         },
                         {
                             data: 'status',

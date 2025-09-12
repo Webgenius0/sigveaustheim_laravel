@@ -37,6 +37,9 @@ class BalanceService
         }
 
         return [
+            'name' => $student->name,
+            'age' => $age,
+            'gender' => $student->gender,
             'points' => $rule->points,
             'comment' => "Scored {$rule->points} points in {$duration} seconds",
         ];
