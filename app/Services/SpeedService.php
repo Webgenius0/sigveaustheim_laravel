@@ -3,10 +3,10 @@
 namespace App\Services;
 
 use App\Helper\Helper;
+use App\Models\SpeedTestRule;
 use App\Models\Student;
-use App\Models\AgilityTestRule;
 
-class AgilityService
+class SpeedService
 {
     /**
      * Create a new class instance.
@@ -26,7 +26,7 @@ class AgilityService
 
 
         // Find matching rule
-        $rule = AgilityTestRule::where('gender', $student->gender)
+        $rule = SpeedTestRule::where('gender', $student->gender)
             ->where('age', $age)
             ->where('min_duration', '<=', $duration)
             ->where('max_duration', '>=', $duration)
@@ -44,6 +44,7 @@ class AgilityService
             'age' => $age,
             'gender' => $student->gender,
             'points' => $rule->points,
+            'duration' => $duration . ' sec',
             'comment' => "Scored {$rule->points} points in {$duration} seconds",
         ];
     }

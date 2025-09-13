@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('strength_test_rules', function (Blueprint $table) {
+        Schema::create('cardiovascular_test_rules', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('age')->nullable();
 
-            // count range (sec)
-            $table->decimal('min_count', 5, 2)->nullable();
-            $table->decimal('max_count', 5, 2)->nullable();
+            // duration range (sec)
+            $table->decimal('min_duration', 5, 2)->nullable();
+            $table->decimal('max_duration', 5, 2)->nullable();
 
             $table->string('gender')->nullable();
             $table->unsignedInteger('points')->nullable();
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('strength_test_rules');
+        Schema::dropIfExists('cardiovascular_test_rules');
     }
 };

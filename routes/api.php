@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\BalanceController;
 use App\Http\Controllers\Api\CoordinationController;
 use App\Http\Controllers\Api\FlexibilityController;
+use App\Http\Controllers\Api\StrengthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CMSDataController;
 use App\Http\Controllers\Api\StudentController;
@@ -13,6 +14,9 @@ use App\Http\Controllers\Api\Auth\AuthenticationController;
 use App\Http\Controllers\Api\AgilityController;
 use App\Http\Controllers\Api\PowerController;
 use App\Http\Controllers\Api\ReactionController;
+use App\Http\Controllers\Api\SpeedController;
+use App\Http\Controllers\Api\StaminaController;
+use App\Http\Controllers\Api\CardiovascularController;
 
 //health-check
 Route::get("/check", function () {
@@ -70,4 +74,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/coordination-test', [CoordinationController::class, 'store']);
     Route::post('/reaction-test', [ReactionController::class, 'store']);
     Route::post('/power-test', [PowerController::class, 'store']);
+    Route::post('/strength-test', [StrengthController::class, 'store']);
+    Route::post('/stamina-test', [StaminaController::class, 'store']);
+    Route::post('/speed-test', [SpeedController::class, 'store']);
+    Route::post('/cardiovascular-test', [CardiovascularController::class, 'store']);
 });

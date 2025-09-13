@@ -4,18 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Student;
 use App\Models\TestScore;
-use App\Traits\ApiResponse;
 use App\Models\FitnessTests;
+use App\Services\SpeedService;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use App\Services\AgilityService;
-use App\Services\ReactionService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
-class ReactionController extends Controller
+class SpeedController extends Controller
 {
     use ApiResponse;
-    public function store(Request $request, ReactionService $reactionService)
+    public function store(Request $request, SpeedService $speedService)
     {
         $user = auth('api')->user();
         if (!$user) {
@@ -37,8 +37,8 @@ class ReactionController extends Controller
         $student = Student::findOrFail($request->student_id);
         $test = FitnessTests::findOrFail($request->fitness_test_id);
 
-        DB::transaction(function () use ($student, $test, $request, $reactionService, &$result) {
-            $result = $reactionService->calculatePoints($student, $request->duration);
+        DB::transaction(function () use ($student, $test, $request, $speedService, &$result) {
+            $result = $speedService->calculatePoints($student, $request->duration);
 
             TestScore::create([
                 'student_id'      => $student->id,

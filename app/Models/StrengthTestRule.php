@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class StrengthTestRule extends Model
 {
-    //
+    protected $guarded = [];
 }

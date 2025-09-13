@@ -32,7 +32,7 @@ class CoordinationController extends Controller
         $request->validate([
             'student_id'      => 'required|exists:students,id',
             'fitness_test_id' => 'required|exists:fitness_tests,id',
-            'score'        => 'required|numeric|min:0',
+            'score'        => 'required|numeric',
         ]);
 
         $student = Student::findOrFail($request->student_id);

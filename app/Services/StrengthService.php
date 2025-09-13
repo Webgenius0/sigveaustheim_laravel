@@ -3,10 +3,10 @@
 namespace App\Services;
 
 use App\Helper\Helper;
+use App\Models\StrengthTestRule;
 use App\Models\Student;
-use App\Models\AgilityTestRule;
 
-class AgilityService
+class StrengthService
 {
     /**
      * Create a new class instance.
@@ -19,17 +19,17 @@ class AgilityService
 
     }
 
-    public function calculatePoints(Student $student, $duration)
+    public function calculatePoints(Student $student, $count)
     {
         // Calculate age using helper method
         $age = Helper::calculateAge($student->date_of_birth);
 
 
         // Find matching rule
-        $rule = AgilityTestRule::where('gender', $student->gender)
+        $rule = StrengthTestRule::where('gender', $student->gender)
             ->where('age', $age)
-            ->where('min_duration', '<=', $duration)
-            ->where('max_duration', '>=', $duration)
+            ->where('min_count', '<=', $count)
+            ->where('max_count', '>=', $count)
             ->first();
 
         if (!$rule) {
@@ -44,7 +44,7 @@ class AgilityService
             'age' => $age,
             'gender' => $student->gender,
             'points' => $rule->points,
-            'comment' => "Scored {$rule->points} points in {$duration} seconds",
+            'comment' => "Scored {$rule->points} points in {$count} mrf",
         ];
     }
 }

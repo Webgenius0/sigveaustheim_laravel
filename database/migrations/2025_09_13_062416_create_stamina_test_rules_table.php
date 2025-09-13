@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('strength_test_rules', function (Blueprint $table) {
+        Schema::create('stamina_test_rules', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('age')->nullable();
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('strength_test_rules');
+        Schema::dropIfExists('stamina_test_rules');
     }
 };

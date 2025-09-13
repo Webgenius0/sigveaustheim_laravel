@@ -23,7 +23,11 @@ class DatabaseSeeder extends Seeder
             FlexibilityRuleSeeder::class,
             BalanceRuleSeeder::class,
             CoordinationRuleSeeder::class,
-            ReactionRuleSeeder::class
+            ReactionRuleSeeder::class,
+            StrengthRuleSeeder::class,
+            StaminaRuleSeeder::class,
+            SpeedRuleSeeder::class,
+            CardiovascularRuleSeeder::class
         ]);
     }
 }
