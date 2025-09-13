@@ -89,8 +89,8 @@ class AuthenticationController extends Controller
             // Send email verification mail
             $verificationUrl = route('verify.email', ['token' => $verificationToken]);
 
-            Mail::to($user->email)
-                ->send(new TeacherEmailVerificationMail($user, $verificationUrl));
+            // Mail::to($user->email)
+            //     ->send(new TeacherEmailVerificationMail($user, $verificationUrl));
 
             return $this->success([
                 'user'    => $user,
@@ -128,11 +128,11 @@ class AuthenticationController extends Controller
         $approveUrl = route('admin.schools.approve', ['token' => $school->approval_token]);
         $cancelUrl = route('admin.schools.cancel', ['token' => $school->approval_token]);
 
-        Mail::to('admin@example.com')
-            ->send(new SchoolRegisterSuccessForAdminMail($school, $approveUrl, $cancelUrl, $contact));
+        // Mail::to('admin@example.com')
+        //     ->send(new SchoolRegisterSuccessForAdminMail($school, $approveUrl, $cancelUrl, $contact));
 
-        Mail::to($contact->email)
-            ->send(new SchoolRegisterSuccessForTeacherMail($contact, $school));
+        // Mail::to($contact->email)
+        //     ->send(new SchoolRegisterSuccessForTeacherMail($contact, $school));
 
         return response()->json(['message' => 'Email verified successfully. Please wait for school approval.']);
     }

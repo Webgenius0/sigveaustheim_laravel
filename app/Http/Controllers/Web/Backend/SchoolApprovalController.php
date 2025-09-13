@@ -45,7 +45,7 @@ class SchoolApprovalController extends Controller
         ]);
 
 
-        Mail::to($teacher->email)->send(new SchoolApprovelSuccessMail($teacher, $school));
+        // Mail::to($teacher->email)->send(new SchoolApprovelSuccessMail($teacher, $school));
 
 
         return redirect()->route('dashboard')
@@ -88,7 +88,7 @@ class SchoolApprovalController extends Controller
 
         // Send cancel mail
         if ($teacher && $teacher->email) {
-            Mail::to($teacher->email)->send(new SchoolCancelSuccessMail($teacher, $school));
+            // Mail::to($teacher->email)->send(new SchoolCancelSuccessMail($teacher, $school));
         }
 
         return redirect()->route('dashboard')
