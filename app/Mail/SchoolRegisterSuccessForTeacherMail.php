@@ -2,17 +2,15 @@
 
 namespace App\Mail;
 
-use App\Models\User;
 use App\Models\School;
 use App\Models\Contact;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SchoolRegisterSuccessForTeacherMail extends Mailable
+class SchoolRegisterSuccessForTeacherMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -38,15 +36,6 @@ class SchoolRegisterSuccessForTeacherMail extends Mailable
         );
     }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
-    }
 
     public function build()
     {
