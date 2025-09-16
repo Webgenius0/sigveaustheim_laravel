@@ -35,10 +35,12 @@ class StudentController extends Controller
             // Format response
             $response = [
                 'data'         => StudentResource::collection($students),
-                'total'        => $students->total(),
-                'current_page' => $students->currentPage(),
-                'last_page'    => $students->lastPage(),
-                'per_page'     => $students->perPage()
+                'pagination' => [
+                    'total'        => $students->total(),
+                    'current_page' => $students->currentPage(),
+                    'last_page'    => $students->lastPage(),
+                    'per_page'     => $students->perPage()
+                ]
             ];
 
             return $this->success(
@@ -80,6 +82,7 @@ class StudentController extends Controller
     // Create a new student
     public function store(Request $request)
     {
+        dd($request->all());
         try {
             $user = auth('api')->user();
 

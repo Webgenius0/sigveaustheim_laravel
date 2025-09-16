@@ -28,11 +28,6 @@ class StudentResource extends JsonResource
                 return [
                     'id'             => $this->school->id,
                     'name'           => $this->school->name,
-                    'principal_name' => $this->school->principal_name,
-                    'street_address' => $this->school->street_address,
-                    'city'           => $this->school->city,
-                    'state'          => $this->school->state,
-                    'zip_code'       => $this->school->zip_code,
                 ];
             }),
         ];
