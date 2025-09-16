@@ -23,4 +23,9 @@ class FitnessTests extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function testScores()
+    {
+        return $this->hasMany(TestScore::class);
+    }
 }

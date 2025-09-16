@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             BalanceRuleSeeder::class,
             CoordinationRuleSeeder::class,
             ReactionRuleSeeder::class,
+            PowerTestRuleSeeder::class,
             StrengthRuleSeeder::class,
             StaminaRuleSeeder::class,
             SpeedRuleSeeder::class,

@@ -1,9 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\BalanceController;
-use App\Http\Controllers\Api\CoordinationController;
-use App\Http\Controllers\Api\FlexibilityController;
-use App\Http\Controllers\Api\StrengthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CMSDataController;
 use App\Http\Controllers\Api\StudentController;
@@ -11,12 +7,7 @@ use App\Http\Controllers\Api\FitnessTestController;
 use App\Http\Controllers\Api\Auth\UserProfileController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\Auth\AuthenticationController;
-use App\Http\Controllers\Api\AgilityController;
-use App\Http\Controllers\Api\PowerController;
-use App\Http\Controllers\Api\ReactionController;
-use App\Http\Controllers\Api\SpeedController;
-use App\Http\Controllers\Api\StaminaController;
-use App\Http\Controllers\Api\CardiovascularController;
+use App\Http\Controllers\Api\FitnessTestScoreController;
 
 //health-check
 Route::get("/check", function () {
@@ -66,14 +57,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/fitness-test/{id}', [FitnessTestController::class, 'show']);
 
     // Test score manage
-    Route::post('/agility-test', [AgilityController::class, 'store']);
-    Route::post('/flexibility-test', [FlexibilityController::class, 'store']);
-    Route::post('/balance-test', [BalanceController::class, 'store']);
-    Route::post('/coordination-test', [CoordinationController::class, 'store']);
-    Route::post('/reaction-test', [ReactionController::class, 'store']);
-    Route::post('/power-test', [PowerController::class, 'store']);
-    Route::post('/strength-test', [StrengthController::class, 'store']);
-    Route::post('/stamina-test', [StaminaController::class, 'store']);
-    Route::post('/speed-test', [SpeedController::class, 'store']);
-    Route::post('/cardiovascular-test', [CardiovascularController::class, 'store']);
+    Route::post('/test/store', [FitnessTestScoreController::class, 'store']);
 });

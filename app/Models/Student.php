@@ -36,4 +36,10 @@ class Student extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    // Relation with ality test table
+    public function testScores()
+    {
+        return $this->hasMany(TestScore::class);
+    }
 }

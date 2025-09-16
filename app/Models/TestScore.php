@@ -15,4 +15,14 @@ class TestScore extends Model
         'score',
         'test_date',
     ];
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+    public function fitnessTest()
+    {
+        return $this->belongsTo(FitnessTests::class);
+    }
 }

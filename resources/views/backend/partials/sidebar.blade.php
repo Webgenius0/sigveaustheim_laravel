@@ -37,10 +37,28 @@
                 <li class="slide">
                     <a class="side-menu__item {{ request()->routeIs('schools.list') ? 'has-link' : '' }}"
                         href="{{ route('schools.list') }}">
-                        <i class="fa fa-building" style="margin-right: 8px;"></i>
+
+                        <span class="icon-wrapper">
+                            <i class="fa-solid fa-building" style="margin-right: 8px"></i>
+                        </span>
+
                         <span class="side-menu__label">Schools</span>
                     </a>
                 </li>
+
+                {{-- test manage --}}
+                <li class="slide">
+                    <a class="side-menu__item {{ request()->routeIs('schools.list') ? 'has-link' : '' }}"
+                        href="{{ route('schools.list') }}">
+
+                        <span class="icon-wrapper">
+                            <i class="fa-solid fa-person-running" stu style="margin-right: 8px"></i>
+                        </span>
+
+                        <span class="side-menu__label">Tests</span>
+                    </a>
+                </li>
+
 
                 <h3>CMS</h3>
 

@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('fitness_tests', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100)->unique();
-            $table->text('description')->nullable()->nullable();
+            $table->text('description')->nullable();
             $table->enum('scoring_type', ['time', 'distance', 'count', 'reps', 'score', 'level'])->nullable();
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

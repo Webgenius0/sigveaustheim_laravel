@@ -7,13 +7,14 @@ use App\Models\User;
 use App\Helper\Helper;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\UserRegisterRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\Auth\UserRegisterRequest;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserProfileController extends Controller
@@ -31,7 +32,8 @@ class UserProfileController extends Controller
             }
 
             // load school & contacts
-            $user->load(['school', 'school.contacts']);
+            $user->load(['school.contact']);
+
 
             return $this->success(
                 new UserResource($user),
@@ -62,7 +64,13 @@ class UserProfileController extends Controller
                 // school
                 'school_name' => 'sometimes|string|max:255',
                 'principal_name' => 'sometimes|string|max:255',
-                'school_email' => 'sometimes|email|max:100|unique:schools,email,' . $user->school_id,
+                // 'school_email' => 'sometimes|email|max:100|unique:schools,email,' . $user->school_id,
+                'school_email' => [
+                    'sometimes',
+                    'email',
+                    'max:100',
+                    Rule::unique('schools', 'email')->ignore($user->school->id), // <-- note school id here
+                ],
                 'school_phone' => 'sometimes|string|max:20',
                 'street_address' => 'sometimes|string|max:255',
                 'city' => 'sometimes|string|max:100',
@@ -72,7 +80,6 @@ class UserProfileController extends Controller
 
                 // contact
                 'contact_name' => 'sometimes|string|max:255',
-                'contact_email' => 'sometimes|email|max:100',
                 'contact_phone' => 'nullable|string|max:20',
             ]);
 
@@ -92,26 +99,19 @@ class UserProfileController extends Controller
             }
 
             // update contact
-            $contact = $user->school->contacts()->first();
+            $contact = $user->school->contact->first();
             if ($contact) {
                 $contact->update([
                     'name' => $validatedData['contact_name'] ?? $contact->name,
-                    'email' => $validatedData['contact_email'] ?? $contact->email,
                     'phone' => $validatedData['contact_phone'] ?? $contact->phone,
                 ]);
             }
 
 
-            if (!empty($validatedData['contact_email'])) {
-                $user->update([
-                    'email' => $validatedData['contact_email'],
-                ]);
-            }
-
             DB::commit();
 
             return $this->success(
-                new UserResource($user->fresh()->load(['school', 'school.contacts'])),
+                new UserResource($user->fresh()->load(['school', 'school.contact'])),
                 'Profile updated successfully.',
                 200
             );

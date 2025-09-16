@@ -8,10 +8,6 @@ use App\Models\AgilityTestRule;
 
 class AgilityService
 {
-    /**
-     * Create a new class instance.
-     */
-
 
     public function __construct()
     {

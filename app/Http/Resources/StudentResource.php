@@ -21,13 +21,21 @@ class StudentResource extends JsonResource
             'name'         => $this->name,
             'gender'       => $this->gender,
             'age'          => $this->date_of_birth ? Carbon::parse($this->date_of_birth)->age : null,
+            'date_of_birth'      => $this->date_of_birth,
             'class'        => $this->class,
             'section'      => $this->section,
+            'roll'      => $this->class_roll,
             'created_by'   => $this->creator ? $this->creator->username : null,
             'school'       => $this->whenLoaded('school', function () {
                 return [
                     'id'             => $this->school->id,
-                    'name'           => $this->school->name,
+                    'name'             => $this->school->name,
+                    'principal_name'           => $this->school->principal_name,
+                    'phone'           => $this->school->phone ?? null,
+                    'street_address'           => $this->school->street_address ?? null,
+                    'city'           => $this->school->city,
+                    'state'           => $this->school->state,
+                    'zip_code'           => $this->school->zip_code,
                 ];
             }),
         ];
