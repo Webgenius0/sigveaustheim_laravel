@@ -17,6 +17,7 @@ class Student extends Model
         'class',
         'section',
         'created_by',
+        'class_roll'
     ];
 
     //date mutator for date_of_birth

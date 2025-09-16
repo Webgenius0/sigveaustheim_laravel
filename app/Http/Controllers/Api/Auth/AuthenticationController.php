@@ -132,6 +132,8 @@ class AuthenticationController extends Controller
         Mail::to('admin@example.com')
             ->queue(new SchoolRegisterSuccessForAdminMail($school, $approveUrl, $cancelUrl, $contact));
 
+        sleep(3);
+        
         Mail::to($contact->email)
             ->queue(new SchoolRegisterSuccessForTeacherMail($contact, $school));
 

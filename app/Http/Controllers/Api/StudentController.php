@@ -15,6 +15,7 @@ class StudentController extends Controller
     use ApiResponse;
 
 
+    // get all student
     public function index(Request $request)
     {
         try {
@@ -87,24 +88,33 @@ class StudentController extends Controller
             }
 
             $validator = Validator::make($request->all(), [
-                'school_id'     => 'required|exists:schools,id',
                 'name'          => 'required|string|max:255',
                 'gender'        => 'required|string|in:male,female',
                 'date_of_birth' => 'nullable|date',
                 'class'         => 'nullable|string|max:50',
                 'section'       => 'nullable|string|max:50',
+                'class_roll'    => 'nullable|string|max:50',
             ]);
 
             if ($validator->fails()) {
-                return $this->error($validator->errors(), 'Validation failed', 422);
+                // ek line message format
+                $errors = $validator->errors()->all();
+                $message = $errors[0] ?? 'Validation failed.';
+                if (count($errors) > 1) {
+                    $message .= ' (and ' . (count($errors) - 1) . ' more errors)';
+                }
+
+                return $this->error([], $message, 422);
             }
 
             $validatedData = $validator->validated();
+
+            $validatedData['school_id']  = $user->school->id;
             $validatedData['created_by'] = $user->id;
 
-            $student = Student::create($validatedData);
+            // dd($validatedData);
 
-            // $student->load(['school', 'creator']);
+            $student = Student::create($validatedData);
 
             return $this->success(
                 new StudentResource($student),
@@ -131,25 +141,29 @@ class StudentController extends Controller
             }
 
             $validator = Validator::make($request->all(), [
-                'school_id'     => 'sometimes|exists:schools,id',
-                'name'          => 'sometimes|string|max:255',
-                'gender'        => 'sometimes|string|in:male,female',
+                'name'          => 'required|string|max:255',
+                'gender'        => 'required|string|in:male,female',
                 'date_of_birth' => 'nullable|date',
                 'class'         => 'nullable|string|max:50',
                 'section'       => 'nullable|string|max:50',
+                'class_roll'    => 'nullable|string|max:50',
             ]);
 
             if ($validator->fails()) {
-                return $this->error($validator->errors(), 'Validation failed', 422);
+                // ek line message format
+                $errors = $validator->errors()->all();
+                $message = $errors[0] ?? 'Validation failed.';
+                if (count($errors) > 1) {
+                    $message .= ' (and ' . (count($errors) - 1) . ' more errors)';
+                }
+
+                return $this->error([], $message, 422);
             }
 
             $validatedData = $validator->validated();
 
             // update student
             $student->update($validatedData);
-
-            // load relations for Resource
-            // $student->load(['school', 'creator']);
 
             return $this->success(
                 new StudentResource($student),

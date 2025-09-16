@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UserRegisterRequest extends FormRequest
 {
@@ -46,5 +48,22 @@ class UserRegisterRequest extends FormRequest
             'username.unique' => 'This username is already taken.',
             'password.confirmed' => 'Passwords do not match.',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors()->all();
+
+        // Laravel style summary
+        $message = $errors[0] ?? 'The given data was invalid.';
+        if (count($errors) > 1) {
+            $message .= ' (and ' . (count($errors) - 1) . ' more errors)';
+        }
+
+        throw new HttpResponseException(
+            response()->json([
+                'message' => $message
+            ], 422)
+        );
     }
 }

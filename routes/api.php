@@ -30,8 +30,6 @@ Route::group(['middleware' => 'guest:api'], function () {
     Route::post('/login', [AuthenticationController::class, 'login']);
     Route::post('/register', [AuthenticationController::class, 'register']);
 
-
-
     // Password Reset
     Route::post('/forgot-password', [ResetPasswordController::class, 'forgotPassword']);
     Route::post('/resend-otp', [ResetPasswordController::class, 'resendOtp']);
