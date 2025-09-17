@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/profile', [UserProfileController::class, 'profile']);
     Route::post('/update-profile', [UserProfileController::class, 'updateProfile']);
     Route::post('/update-avatar', [UserProfileController::class, 'updateAvatar']);
+    Route::post('/update-password', [UserProfileController::class, 'updatePassword']);
 
     //Student Routes
     Route::get('/students', [StudentController::class, 'index']);

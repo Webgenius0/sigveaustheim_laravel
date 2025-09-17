@@ -48,8 +48,8 @@
 
                 {{-- test manage --}}
                 <li class="slide">
-                    <a class="side-menu__item {{ request()->routeIs('schools.list') ? 'has-link' : '' }}"
-                        href="{{ route('schools.list') }}">
+                    <a class="side-menu__item {{ request()->routeIs('fitness.test.index') ? 'has-link' : '' }}"
+                        href="{{ route('fitness.test.index') }}">
 
                         <span class="icon-wrapper">
                             <i class="fa-solid fa-person-running" stu style="margin-right: 8px"></i>

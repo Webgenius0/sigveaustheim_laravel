@@ -152,4 +152,32 @@ class UserProfileController extends Controller
             return $this->error([], $e->getMessage(), 500);
         }
     }
+
+    // update password
+    //update password
+    public function updatePassword(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'current_password' => ['required', 'string', 'min:8'],
+                'password'  => ['required', 'string', 'min:8', 'confirmed'],
+            ]);
+
+            if ($validator->fails()) {
+                return $this->error([], $validator->errors()->first(), 200);
+            }
+
+            $user = auth('api')->user();
+
+            if (!Hash::check($request->current_password, $user->password)) {
+                return $this->error([], 'current password is incorrect.', 200);
+            }
+
+            $user->update(['password' => Hash::make($request->password)]);
+
+            return $this->success(['Password updated successfully'], 'Password updated successfully.', 200);
+        } catch (Exception $e) {
+            return $this->error([], $e->getMessage(), 500);
+        }
+    }
 }

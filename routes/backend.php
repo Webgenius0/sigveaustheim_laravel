@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\Backend\CMS\ReadyToTransformController;
 use App\Http\Controllers\Web\Backend\SchoolApprovalController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Backend\DashboardController;
+use App\Http\Controllers\Web\Backend\FitnessTestManageController;
 use App\Http\Controllers\Web\Backend\SchoolManageController;
 use App\Http\Controllers\Web\Backend\TestimonialController;
 use App\Http\Controllers\Web\Backend\Settings\SocialController;
@@ -65,9 +66,19 @@ Route::middleware(['auth', 'admin'])->group(function () {
     //school manage form dashobard
     Route::get('/school/list', [SchoolManageController::class, 'index'])->name('schools.list');
     Route::get('/school/show', [SchoolManageController::class, 'show'])->name('school.show');
-    
-    // Route::get('/school/status/{id}', [SchoolManageController::class, 'status'])->name('school.status');
+
     Route::post('/school/status/{id}', [SchoolManageController::class, 'status'])->name('school.status');
+
+
+    // Fitness test mange form dashboard
+    // Fitness Tests Routes
+    Route::prefix('fitness/tests')->name('fitness.test.')->group(function () {
+        Route::get('/', [FitnessTestManageController::class, 'index'])->name('index');     // list (datatable + view)
+        Route::post('/store', [FitnessTestManageController::class, 'store'])->name('store'); // save new
+        Route::get('/edit/{id}', [FitnessTestManageController::class, 'edit'])->name('edit'); // edit form
+        Route::post('/update/{id}', [FitnessTestManageController::class, 'update'])->name('update'); // update record
+        Route::delete('/delete/{id}', [FitnessTestManageController::class, 'destroy'])->name('delete'); // delete
+    });
 });
 
 
