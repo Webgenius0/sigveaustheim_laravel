@@ -40,7 +40,7 @@ class FitnessTestScoreController extends Controller
         $request->validate([
             'student_id'      => 'required|exists:students,id',
             'fitness_test_id' => 'required|exists:fitness_tests,id',
-            'test_score'        => 'required|numeric',
+            'test_score'        => 'required',
         ]);
 
         $student = Student::findOrFail($request->student_id);

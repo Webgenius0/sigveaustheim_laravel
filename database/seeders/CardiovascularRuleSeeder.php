@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\CardiovascularTestRule;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CardiovascularRuleSeeder extends Seeder
@@ -65,9 +64,9 @@ class CardiovascularRuleSeeder extends Seeder
             ['age' => 15, 'gender' => 'male', 'min_duration' => 4.2, 'max_duration' => 5.2,  'points' => 1],
             ['age' => 15, 'gender' => 'male', 'min_duration' => 5.3, 'max_duration' => 6.2,  'points' => 2],
             ['age' => 15, 'gender' => 'male', 'min_duration' => 6.3, 'max_duration' => 7.1,  'points' => 3],
-            ['age' => 15, 'gender' => 'male', 'min_duration' => 7.2, 'max_duration' => 7.10, 'points' => 4],
+            ['age' => 15, 'gender' => 'male', 'min_duration' => 7.2, 'max_duration' => 8, 'points' => 4],
             ['age' => 15, 'gender' => 'male', 'min_duration' => 8.1, 'max_duration' => 8.9,  'points' => 5],
-            ['age' => 15, 'gender' => 'male', 'min_duration' => 8.10, 'max_duration' => 9.8,  'points' => 6],
+            ['age' => 15, 'gender' => 'male', 'min_duration' => 9, 'max_duration' => 9.8,  'points' => 6],
             ['age' => 15, 'gender' => 'male', 'min_duration' => 9.9, 'max_duration' => 10.7, 'points' => 7],
             ['age' => 15, 'gender' => 'male', 'min_duration' => 10.8, 'max_duration' => 11.7, 'points' => 8],
             ['age' => 15, 'gender' => 'male', 'min_duration' => 11.8, 'max_duration' => 12.5, 'points' => 9],
@@ -138,7 +137,7 @@ class CardiovascularRuleSeeder extends Seeder
             ['age' => 10, 'gender' => 'male', 'min_duration' => 5.3, 'max_duration' => 5.8,  'points' => 4],
             ['age' => 10, 'gender' => 'male', 'min_duration' => 5.9, 'max_duration' => 6.6,  'points' => 5],
             ['age' => 10, 'gender' => 'male', 'min_duration' => 6.7, 'max_duration' => 7.3,  'points' => 6],
-            ['age' => 10, 'gender' => 'male', 'min_duration' => 7.4, 'max_duration' => 7.10, 'points' => 7],
+            ['age' => 10, 'gender' => 'male', 'min_duration' => 7.4, 'max_duration' => 8.0, 'points' => 7],
             ['age' => 10, 'gender' => 'male', 'min_duration' => 8.1, 'max_duration' => 8.7,  'points' => 8],
             ['age' => 10, 'gender' => 'male', 'min_duration' => 8.8, 'max_duration' => 9.2,  'points' => 9],
             ['age' => 10, 'gender' => 'male', 'min_duration' => 9.3, 'max_duration' => 99, 'points' => 10],
@@ -151,7 +150,7 @@ class CardiovascularRuleSeeder extends Seeder
             ['age' => 9, 'gender' => 'male', 'min_duration' => 4.5, 'max_duration' => 5.1,  'points' => 3],
             ['age' => 9, 'gender' => 'male', 'min_duration' => 5.2, 'max_duration' => 5.7,  'points' => 4],
             ['age' => 9, 'gender' => 'male', 'min_duration' => 5.8, 'max_duration' => 6.4,  'points' => 5],
-            ['age' => 9, 'gender' => 'male', 'min_duration' => 6.5, 'max_duration' => 6.10, 'points' => 6],
+            ['age' => 9, 'gender' => 'male', 'min_duration' => 6.5, 'max_duration' => 7.0, 'points' => 6],
             ['age' => 9, 'gender' => 'male', 'min_duration' => 7.1, 'max_duration' => 7.5,  'points' => 7],
             ['age' => 9, 'gender' => 'male', 'min_duration' => 7.6, 'max_duration' => 8.1,  'points' => 8],
             ['age' => 9, 'gender' => 'male', 'min_duration' => 8.2, 'max_duration' => 8.6,  'points' => 9],
@@ -167,7 +166,7 @@ class CardiovascularRuleSeeder extends Seeder
             ['age' => 8, 'gender' => 'male', 'min_duration' => 5.3, 'max_duration' => 5.7,  'points' => 5],
             ['age' => 8, 'gender' => 'male', 'min_duration' => 5.8, 'max_duration' => 6.3,  'points' => 6],
             ['age' => 8, 'gender' => 'male', 'min_duration' => 6.4, 'max_duration' => 6.9,  'points' => 7],
-            ['age' => 8, 'gender' => 'male', 'min_duration' => 6.10, 'max_duration' => 7.4,  'points' => 8],
+            ['age' => 8, 'gender' => 'male', 'min_duration' => 7.0, 'max_duration' => 7.4,  'points' => 8],
             ['age' => 8, 'gender' => 'male', 'min_duration' => 7.5, 'max_duration' => 7.9,  'points' => 9],
             ['age' => 8, 'gender' => 'male', 'min_duration' => 8.0, 'max_duration' => 99, 'points' => 10],
 
@@ -195,9 +194,9 @@ class CardiovascularRuleSeeder extends Seeder
             ['age' => 18, 'gender' => 'female', 'min_duration' => 4.3,  'max_duration' => 5.2,  'points' => 1],
             ['age' => 18, 'gender' => 'female', 'min_duration' => 5.3,  'max_duration' => 6.2,  'points' => 2],
             ['age' => 18, 'gender' => 'female', 'min_duration' => 6.3,  'max_duration' => 7.1,  'points' => 3],
-            ['age' => 18, 'gender' => 'female', 'min_duration' => 7.2,  'max_duration' => 7.10, 'points' => 4],
+            ['age' => 18, 'gender' => 'female', 'min_duration' => 7.2,  'max_duration' => 8.0, 'points' => 4],
             ['age' => 18, 'gender' => 'female', 'min_duration' => 8.1,  'max_duration' => 8.9,  'points' => 5],
-            ['age' => 18, 'gender' => 'female', 'min_duration' => 8.10, 'max_duration' => 9.7,  'points' => 6],
+            ['age' => 18, 'gender' => 'female', 'min_duration' => 9.0, 'max_duration' => 9.7,  'points' => 6],
             ['age' => 18, 'gender' => 'female', 'min_duration' => 9.8,  'max_duration' => 10.6, 'points' => 7],
             ['age' => 18, 'gender' => 'female', 'min_duration' => 10.7, 'max_duration' => 11.5, 'points' => 8],
             ['age' => 18, 'gender' => 'female', 'min_duration' => 11.6, 'max_duration' => 12.3, 'points' => 9],
@@ -208,9 +207,9 @@ class CardiovascularRuleSeeder extends Seeder
             ['age' => 17, 'gender' => 'female', 'min_duration' => 0.0,  'max_duration' => 4.1,  'points' => 0],
             ['age' => 17, 'gender' => 'female', 'min_duration' => 4.2,  'max_duration' => 5.1,  'points' => 1],
             ['age' => 17, 'gender' => 'female', 'min_duration' => 5.2,  'max_duration' => 6.1,  'points' => 2],
-            ['age' => 17, 'gender' => 'female', 'min_duration' => 6.2,  'max_duration' => 6.10, 'points' => 3],
+            ['age' => 17, 'gender' => 'female', 'min_duration' => 6.2,  'max_duration' => 7.0, 'points' => 3],
             ['age' => 17, 'gender' => 'female', 'min_duration' => 7.1,  'max_duration' => 7.9,  'points' => 4],
-            ['age' => 17, 'gender' => 'female', 'min_duration' => 7.10, 'max_duration' => 8.7,  'points' => 5],
+            ['age' => 17, 'gender' => 'female', 'min_duration' => 8.0, 'max_duration' => 8.7,  'points' => 5],
             ['age' => 17, 'gender' => 'female', 'min_duration' => 8.8,  'max_duration' => 9.5,  'points' => 6],
             ['age' => 17, 'gender' => 'female', 'min_duration' => 9.6,  'max_duration' => 10.4, 'points' => 7],
             ['age' => 17, 'gender' => 'female', 'min_duration' => 10.5, 'max_duration' => 11.3, 'points' => 8],
@@ -223,12 +222,12 @@ class CardiovascularRuleSeeder extends Seeder
             ['age' => 16, 'gender' => 'female', 'min_duration' => 4.1,   'max_duration' => 4.9,   'points' => 1],
             ['age' => 16, 'gender' => 'female', 'min_duration' => 5.1,   'max_duration' => 5.9,   'points' => 2],
             ['age' => 16, 'gender' => 'female', 'min_duration' => 6.1,   'max_duration' => 6.9,   'points' => 3],
-            ['age' => 16, 'gender' => 'female', 'min_duration' => 6.10,  'max_duration' => 7.8,   'points' => 4],
+            ['age' => 16, 'gender' => 'female', 'min_duration' => 7.0,  'max_duration' => 7.8,   'points' => 4],
             ['age' => 16, 'gender' => 'female', 'min_duration' => 7.9,   'max_duration' => 8.7,   'points' => 5],
             ['age' => 16, 'gender' => 'female', 'min_duration' => 8.8,   'max_duration' => 9.5,   'points' => 6],
             ['age' => 16, 'gender' => 'female', 'min_duration' => 9.6,   'max_duration' => 10.2,  'points' => 7],
-            ['age' => 16, 'gender' => 'female', 'min_duration' => 10.3,  'max_duration' => 10.10, 'points' => 8],
-            ['age' => 16, 'gender' => 'female', 'min_duration' => 10.11, 'max_duration' => 11.7,  'points' => 9],
+            ['age' => 16, 'gender' => 'female', 'min_duration' => 10.3,  'max_duration' => 11, 'points' => 8],
+            ['age' => 16, 'gender' => 'female', 'min_duration' => 11.1, 'max_duration' => 11.7,  'points' => 9],
             ['age' => 16, 'gender' => 'female', 'min_duration' => 11.8,  'max_duration' => 99, 'points' => 10],
 
 
@@ -238,7 +237,7 @@ class CardiovascularRuleSeeder extends Seeder
             ['age' => 15, 'gender' => 'female', 'min_duration' => 4.6,  'max_duration' => 5.5,  'points' => 2],
             ['age' => 15, 'gender' => 'female', 'min_duration' => 5.6,  'max_duration' => 6.4,  'points' => 3],
             ['age' => 15, 'gender' => 'female', 'min_duration' => 6.5,  'max_duration' => 7.2,  'points' => 4],
-            ['age' => 15, 'gender' => 'female', 'min_duration' => 7.3,  'max_duration' => 7.10, 'points' => 5],
+            ['age' => 15, 'gender' => 'female', 'min_duration' => 7.3,  'max_duration' => 8.0, 'points' => 5],
             ['age' => 15, 'gender' => 'female', 'min_duration' => 8.1,  'max_duration' => 8.8,  'points' => 6],
             ['age' => 15, 'gender' => 'female', 'min_duration' => 8.9,  'max_duration' => 9.5,  'points' => 7],
             ['age' => 15, 'gender' => 'female', 'min_duration' => 9.6,  'max_duration' => 10.3, 'points' => 8],
@@ -297,7 +296,7 @@ class CardiovascularRuleSeeder extends Seeder
             ['age' => 11, 'gender' => 'female', 'min_duration' => 5.6,  'max_duration' => 6.2,  'points' => 5],
             ['age' => 11, 'gender' => 'female', 'min_duration' => 6.3,  'max_duration' => 6.8,  'points' => 6],
             ['age' => 11, 'gender' => 'female', 'min_duration' => 6.9,  'max_duration' => 7.4,  'points' => 7],
-            ['age' => 11, 'gender' => 'female', 'min_duration' => 7.5,  'max_duration' => 7.10, 'points' => 8],
+            ['age' => 11, 'gender' => 'female', 'min_duration' => 7.5,  'max_duration' => 8.0, 'points' => 8],
             ['age' => 11, 'gender' => 'female', 'min_duration' => 8.1,  'max_duration' => 8.6,  'points' => 9],
             ['age' => 11, 'gender' => 'female', 'min_duration' => 8.7,  'max_duration' => 99, 'points' => 10],
 
@@ -312,8 +311,8 @@ class CardiovascularRuleSeeder extends Seeder
             ['age' => 10, 'gender' => 'female', 'min_duration' => 5.8,  'max_duration' => 6.3,  'points' => 6],
             ['age' => 10, 'gender' => 'female', 'min_duration' => 6.4,  'max_duration' => 6.8,  'points' => 7],
             ['age' => 10, 'gender' => 'female', 'min_duration' => 6.9,  'max_duration' => 7.4,  'points' => 8],
-            ['age' => 10, 'gender' => 'female', 'min_duration' => 7.5,  'max_duration' => 7.10, 'points' => 9],
-            ['age' => 10, 'gender' => 'female', 'min_duration' => 7.11, 'max_duration' => 99, 'points' => 10],
+            ['age' => 10, 'gender' => 'female', 'min_duration' => 7.5,  'max_duration' => 8.0, 'points' => 9],
+            ['age' => 10, 'gender' => 'female', 'min_duration' => 8.1, 'max_duration' => 99, 'points' => 10],
 
 
             // Age 9 and gender female
@@ -323,9 +322,9 @@ class CardiovascularRuleSeeder extends Seeder
             ['age' => 9, 'gender' => 'female', 'min_duration' => 3.8,  'max_duration' => 4.5,  'points' => 3],
             ['age' => 9, 'gender' => 'female', 'min_duration' => 4.6,  'max_duration' => 5.0,  'points' => 4],
             ['age' => 9, 'gender' => 'female', 'min_duration' => 5.1,  'max_duration' => 5.5,  'points' => 5],
-            ['age' => 9, 'gender' => 'female', 'min_duration' => 5.6,  'max_duration' => 5.10, 'points' => 6],
+            ['age' => 9, 'gender' => 'female', 'min_duration' => 5.6,  'max_duration' => 6.0, 'points' => 6],
             ['age' => 9, 'gender' => 'female', 'min_duration' => 6.1,  'max_duration' => 6.5,  'points' => 7],
-            ['age' => 9, 'gender' => 'female', 'min_duration' => 6.6,  'max_duration' => 6.10, 'points' => 8],
+            ['age' => 9, 'gender' => 'female', 'min_duration' => 6.6,  'max_duration' => 7.0, 'points' => 8],
             ['age' => 9, 'gender' => 'female', 'min_duration' => 7.1,  'max_duration' => 7.5,  'points' => 9],
             ['age' => 9, 'gender' => 'female', 'min_duration' => 7.6,  'max_duration' => 99, 'points' => 10],
 

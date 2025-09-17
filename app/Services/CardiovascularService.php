@@ -19,7 +19,7 @@ class CardiovascularService
 
     }
 
-    public function calculatePoints(Student $student, $duration)
+    public function calculatePoints(Student $student, $test_score)
     {
         // Calculate age using helper method
         $age = Helper::calculateAge($student->date_of_birth);
@@ -28,9 +28,11 @@ class CardiovascularService
         // Find matching rule
         $rule = CardiovascularTestRule::where('gender', $student->gender)
             ->where('age', $age)
-            ->where('min_duration', '<=', $duration)
-            ->where('max_duration', '>=', $duration)
+            ->where('min_duration', '<=', $test_score)
+            ->where('max_duration', '>=', $test_score)
             ->first();
+
+            return($rule);exit();
 
         if (!$rule) {
             return [
@@ -44,8 +46,8 @@ class CardiovascularService
             'age' => $age,
             'gender' => $student->gender,
             'points' => $rule->points,
-            'duration' => $duration,
-            'comment' => "Scored {$rule->points} points in {$duration} VO2 Max",
+            'duration' => $test_score,
+            'comment' => "Scored {$rule->points} points in {$test_score} VO2 Max",
         ];
     }
 }

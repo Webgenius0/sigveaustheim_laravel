@@ -48,7 +48,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     //Student Routes
     Route::get('/students', [StudentController::class, 'index']);
-    Route::get('/student/{id}', [StudentController::class, 'show']);
+    Route::get('/student/{id}', [StudentController::class, 'show']); // students detils
     Route::post('/student/store', [StudentController::class, 'store']);
     Route::post('/student/update/{id}', [StudentController::class, 'update']);
     Route::delete('/student/delete/{id}', [StudentController::class, 'destroy']);

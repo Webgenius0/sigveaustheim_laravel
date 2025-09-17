@@ -15,6 +15,7 @@ class FitnessTestResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
+            'image' => asset($this->image_path),
             'scoring_type' => $this->scoring_type,
         ];
 

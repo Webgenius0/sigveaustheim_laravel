@@ -106,6 +106,7 @@
                                 <span class="text-danger error-text description_error"></span>
                             </div>
 
+
                             {{-- Image --}}
                             <div class="col-md-12 mb-3">
                                 <label class="form-label">Image</label>
@@ -268,8 +269,7 @@
             });
 
 
-
-            // Edit test - Load existing data
+            // Edit Test - Load existing data
             // Edit Test - Load existing data
             $(document).on('click', '.editTest', function() {
                 var id = $(this).data('id');
@@ -283,7 +283,10 @@
                         // Fill form fields
                         $('#test_name').val(response.data.name);
                         $('#test_scoring_type').val(response.data.scoring_type);
-                        $('#test_description').val(response.data.description);
+
+                        // Set Summernote content
+                        $('#test_description').summernote('reset'); // clear old content
+                        $('#test_description').summernote('code', response.data.description || '');
 
                         // Handle Dropify image
                         let imageInput = $('#test_image').dropify();
