@@ -147,7 +147,7 @@ class SchoolManageController extends Controller
                 $school->cancelled_at = null;
                 $school->approval_token = null;
 
-                // Mail::to($teacher->email)->send(new SchoolApprovelSuccessMail($teacher, $school));
+                Mail::to($teacher->email)->send(new SchoolApprovelSuccessMail($teacher, $school));
             }
             // Handle cancelled
             elseif ($newStatus === 'cancelled') {
@@ -157,7 +157,7 @@ class SchoolManageController extends Controller
                 $school->approved_at = null;
                 $school->approval_token = null;
 
-                // Mail::to($teacher->email)->send(new SchoolCancelSuccessMail($teacher, $school));
+                Mail::to($teacher->email)->send(new SchoolCancelSuccessMail($teacher, $school));
             }
             // Handle pending (renewal needed)
             else {
@@ -166,7 +166,7 @@ class SchoolManageController extends Controller
                 $school->cancelled_by = null;
                 $school->cancelled_at = null;
 
-                // Mail::to($teacher->email)->send(new SchoolPendingSuccessMail($teacher, $school));
+                Mail::to($teacher->email)->send(new SchoolPendingSuccessMail($teacher, $school));
             }
 
             $school->save();

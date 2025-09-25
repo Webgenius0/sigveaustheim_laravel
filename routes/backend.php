@@ -82,10 +82,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Contact us
     Route::get('/', [ContactUsController::class, 'index'])->name('contact-us.index');
-
-    // Certificate generation
-    Route::get('/certificate-generate/{id}', [CertificateGenerateController::class, 'generateCertificate']);
 });
+
+// Certificate generation
+Route::get('/certificate-generate/{id}', [CertificateGenerateController::class, 'generateCertificate']);
 
 
 

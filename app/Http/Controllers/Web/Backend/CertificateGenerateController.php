@@ -25,6 +25,7 @@ class CertificateGenerateController extends Controller
 
             // Use the resource to prepare structured data
             $studentData = (new studentDetailsResource($student))->toArray(request());
+        
 
             return view('certificate.certificate', compact('studentData'));
         } catch (Exception $e) {

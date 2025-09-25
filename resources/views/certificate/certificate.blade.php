@@ -22,9 +22,7 @@
 
         .certificate {
             width: 210mm;
-            /* A4 width */
             height: 297mm;
-            /* A4 height */
             padding: 20px 50px 50px 50px;
             box-sizing: border-box;
             margin: 0 auto;
@@ -136,7 +134,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            /* background-image: url("{{ asset('certificate/certificate_badge.png') }}"); */
             background-image: url("{{ asset('certificate/certificate_badge.png') }}");
             background-repeat: no-repeat;
             background-size: cover;
@@ -217,7 +214,7 @@
                 @foreach ($studentData['fitness_tests'] as $index => $test)
                     <div class="badge">
                         @if ($test['is_completed'])
-                            <img src="{{ asset('' . ($index + 1) . '.png') }}"
+                            <img src="{{ asset('certificate/badge_' . ($index + 1) . '.png') }}"
                                 alt="{{ $test['name'] }}" />
                         @else
                             <img src="{{ asset('certificate/cross.png') }}" alt="Not Completed" />

@@ -112,6 +112,7 @@ class AuthenticationController extends Controller
     public function verifyEmail($token)
     {
         $user = User::where('verification_token', $token)->first();
+        $admin = User::where('role', 'admin')->first();
 
         if (!$user) {
             return response()->json(['message' => 'Invalid verification token.'], 400);
@@ -129,7 +130,7 @@ class AuthenticationController extends Controller
         $approveUrl = route('admin.schools.approve', ['token' => $school->approval_token]);
         $cancelUrl = route('admin.schools.cancel', ['token' => $school->approval_token]);
 
-        Mail::to('admin@example.com')
+        Mail::to($admin->email)
             ->send (new SchoolRegisterSuccessForAdminMail($school, $approveUrl, $cancelUrl, $contact));
 
         sleep(3);
