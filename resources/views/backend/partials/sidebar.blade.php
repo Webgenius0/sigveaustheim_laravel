@@ -52,10 +52,36 @@
                         href="{{ route('fitness.test.index') }}">
 
                         <span class="icon-wrapper">
-                            <i class="fa-solid fa-person-running" stu style="margin-right: 8px"></i>
+                            <i class="fa-solid fa-person-running" style="margin-right: 8px"></i>
                         </span>
 
                         <span class="side-menu__label">Tests</span>
+                    </a>
+                </li>
+
+                {{-- Feedbacks --}}
+                <li class="slide">
+                    <a class="side-menu__item {{ request()->routeIs('testimonial.index') ? 'has-link' : '' }}"
+                        href="{{ route('testimonial.index') }}">
+
+                        <span class="icon-wrapper">
+                            <i class="fa-solid fa-comment" style="margin-right: 8px"></i>
+                        </span>
+
+                        <span class="side-menu__label">Feedbacks</span>
+                    </a>
+                </li>
+
+                {{-- Feedbacks --}}
+                <li class="slide">
+                    <a class="side-menu__item {{ request()->routeIs('contact-us.index') ? 'has-link' : '' }}"
+                        href="{{ route('contact-us.index') }}">
+
+                        <span class="icon-wrapper">
+                            <i class="fa-solid fa-envelope" style="margin-right: 8px"></i>
+                        </span>
+
+                        <span class="side-menu__label">Contact us</span>
                     </a>
                 </li>
 

@@ -133,14 +133,13 @@ class AuthenticationController extends Controller
             ->queue(new SchoolRegisterSuccessForAdminMail($school, $approveUrl, $cancelUrl, $contact));
 
         sleep(3);
-        
+
         Mail::to($contact->email)
             ->queue(new SchoolRegisterSuccessForTeacherMail($contact, $school));
 
 
         return response()->json(['message' => 'Email verified successfully. Please wait for school approval.']);
     }
-
 
     /*
     ** User login

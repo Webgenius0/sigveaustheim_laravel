@@ -268,8 +268,6 @@
                 });
             });
 
-
-            // Edit Test - Load existing data
             // Edit Test - Load existing data
             $(document).on('click', '.editTest', function() {
                 var id = $(this).data('id');

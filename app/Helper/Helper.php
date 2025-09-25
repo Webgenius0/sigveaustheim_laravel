@@ -44,7 +44,23 @@ class Helper
         return false;
     }
 
-     /**
+    //file upload
+    public static function fileUpload($file, string $folder, string $name): ?string
+    {
+        if (!$file->isValid()) {
+            return null;
+        }
+
+        $imageName = Str::slug($name) . '.' . $file->extension();
+        $path      = public_path('uploads/' . $folder);
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+        $file->move($path, $imageName);
+        return 'uploads/' . $folder . '/' . $imageName;
+    }
+
+    /**
      * Helper function to calculate age from date_of_birth
      */
     public static function calculateAge($date_of_birth): int

@@ -13,17 +13,17 @@ class SettingSeeder extends Seeder
     public function run(): void
     {
         DB::table('settings')->insert([
-            'title'         => 'Whatsdamove',
+            'title'         => 'Fitness Test App',
             'phone'         => '123456789',
-            'email'         => 'info@Whatsdamove.com',
+            'email'         => 'info@Fitness Test App.com',
             'name'          => 'Isak202',
-            'copyright'     => 'Copyright © 2025 Whatsdamove. All rights reserved.',
-            'description'   => "Whatsdamove is a digital agency that creates and shares innovative digital product experiences tailored for startups and small businesses.
+            'copyright'     => 'Copyright © 2025 Fitness Test App. All rights reserved.',
+            'description'   => "Fitness Test App is a digital agency that creates and shares innovative digital product experiences tailored for startups and small businesses.
                                 Through this platform, our team showcases project updates, creative work, and industry insights—giving users a behind-the-scenes look at
                                 how we bring digital ideas to life.",
             'address'       => 'Cairo, Australia',
-            'keywords'      => 'Whatsdamove',
-            'author'        => 'College Park',
+            'keywords'      => 'Fitness Test App',
+            'author'        => 'Sigveaustheim',
             'created_at'    => now(),
             'updated_at'    => now(),
         ]);

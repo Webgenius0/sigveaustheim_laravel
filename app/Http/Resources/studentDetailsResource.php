@@ -73,12 +73,11 @@ class StudentDetailsResource extends JsonResource
             'fitness_tests' => $fitnessTests,
 
             'summary' => [
-                'total_attempts' => $this->testScores->count(),
-                'unique_tests_taken' => $uniqueTestsCount,
-                'overall_percentage' => $overallPercentage,
-                'overall_comment' => $this->getOverallComment($overallPercentage)
+                'total_attempts'      => $this->testScores->count(),
+                'unique_tests_taken'  => $uniqueTestsCount,
+                'overall_percentage'  => $overallPercentage,
+                'overall_comment'     => $this->getOverallComment($overallPercentage),
             ],
-
         ];
     }
 

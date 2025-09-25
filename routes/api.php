@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\ContactUsController;
+use App\Http\Controllers\Api\FeedBackController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CMSDataController;
 use App\Http\Controllers\Api\StudentController;
@@ -30,8 +32,12 @@ Route::group(['middleware' => 'guest:api'], function () {
 
     //CMS Data Routes
     Route::group(['prefix' => 'cms'], function () {
-        Route::get('/landing', [CMSDataController::class, 'getData']);
+        Route::get('/', [CMSDataController::class, 'getData']);
     });
+
+    // Contact us
+    Route::post('/contact-us', [ContactUsController::class, 'contactUs'])
+        ->middleware('throttle:2,1');
 });
 
 
@@ -53,10 +59,18 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/student/update/{id}', [StudentController::class, 'update']);
     Route::delete('/student/delete/{id}', [StudentController::class, 'destroy']);
 
+
     //Fitness Test Routes
     Route::get('/fitness-tests', [FitnessTestController::class, 'index']);
     Route::get('/fitness-test/{id}', [FitnessTestController::class, 'show']);
 
     // Test score manage
     Route::post('/test/store', [FitnessTestScoreController::class, 'store']);
+
+    //review/feedback
+    Route::prefix('review')->group(function () {
+        Route::get('/', [FeedBackController::class, 'index']); // Get all reviews
+        Route::post('/store', [FeedBackController::class, 'store']); // Add or update review
+        Route::delete('/delete/{id}', [FeedBackController::class, 'destroy']); // Delete a review
+    });
 });

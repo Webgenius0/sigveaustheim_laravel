@@ -102,8 +102,6 @@ Route::get('/run-storage-link', function () {
 // teacher email verification
 Route::get('/verify-email/{token}', [AuthenticationController::class, 'verifyEmail'])->name('verify.email');
 
-//Social login test routes
-
 
 require __DIR__.'/auth.php';
 

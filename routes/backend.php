@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Web\Backend\CertificateGenerateController;
 use App\Http\Controllers\Web\Backend\CMS\FitnessTestController;
 use App\Http\Controllers\Web\Backend\CMS\HeroController;
 use App\Http\Controllers\Web\Backend\CMS\HowItWorksController;
 use App\Http\Controllers\Web\Backend\CMS\NeedController;
 use App\Http\Controllers\Web\Backend\CMS\ReadyToTransformController;
+use App\Http\Controllers\Web\Backend\ContactUsController;
 use App\Http\Controllers\Web\Backend\SchoolApprovalController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Backend\DashboardController;
@@ -69,8 +71,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::post('/school/status/{id}', [SchoolManageController::class, 'status'])->name('school.status');
 
-
-    // Fitness test mange form dashboard
     // Fitness Tests Routes
     Route::prefix('fitness/tests')->name('fitness.test.')->group(function () {
         Route::get('/', [FitnessTestManageController::class, 'index'])->name('index');     // list (datatable + view)
@@ -79,13 +79,19 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::post('/update/{id}', [FitnessTestManageController::class, 'update'])->name('update'); // update record
         Route::delete('/delete/{id}', [FitnessTestManageController::class, 'destroy'])->name('delete'); // delete
     });
+
+    // Contact us
+    Route::get('/', [ContactUsController::class, 'index'])->name('contact-us.index');
+
+    // Certificate generation
+    Route::get('/certificate-generate/{id}', [CertificateGenerateController::class, 'generateCertificate']);
 });
 
 
 
-Route::get('/testimonials', [TestimonialController::class, 'index'])->name('admin.testimonial.index');
-Route::post('/testimonial/status/{id}', [TestimonialController::class, 'status'])->name('admin.testimonial.status');
-Route::delete('/testimonial/delete/{id}', [TestimonialController::class, 'destroy'])->name('admin.testimonial.destroy');
+Route::get('/testimonials', [TestimonialController::class, 'index'])->name('testimonial.index');
+Route::post('/testimonial/status/{id}', [TestimonialController::class, 'status'])->name('testimonial.status');
+Route::delete('/testimonial/delete/{id}', [TestimonialController::class, 'destroy'])->name('testimonial.destroy');
 
 
 Route::get('/admin/social-media-settings', [SocialSettingController::class, 'index'])->name('admin.social_media.index');

@@ -42,4 +42,10 @@ class Student extends Model
     {
         return $this->hasMany(TestScore::class);
     }
+
+    // Relation with certificate table
+    public function certificate()
+    {
+        return $this->hasOne(StudentCertificate::class);
+    }
 }

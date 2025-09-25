@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use Exception;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Models\Student;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\StudentCertificate;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\studentDetailsResource;
 use App\Http\Resources\StudentResource;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\studentDetailsResource;
 
 class StudentController extends Controller
 {
@@ -112,7 +116,6 @@ class StudentController extends Controller
             ]);
 
             if ($validator->fails()) {
-                // ek line message format
                 $errors = $validator->errors()->all();
                 $message = $errors[0] ?? 'Validation failed.';
                 if (count($errors) > 1) {
@@ -192,7 +195,6 @@ class StudentController extends Controller
             return $this->error([], 'Something went wrong: ' . $e->getMessage(), 500);
         }
     }
-
 
     // Delete a student
     public function destroy($id)
