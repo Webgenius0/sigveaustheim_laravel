@@ -10,6 +10,7 @@ use App\Traits\ApiResponse;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Mail\SendForgotOtpMail;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -49,11 +50,11 @@ class ResetPasswordController extends Controller
             ]);
 
             // Optional: Enable mail sending
-            // Mail::to($user->email)->queue(new SendForgotOtpMail($otp));
+            Mail::to($user->email)->send(new SendForgotOtpMail($otp, $user));
+
 
             return $this->success([
                 'email' => $user->email,
-                'otp'   => $otp // for testing; remove in production
             ], 'An OTP has been sent to your registered email address. Please check your inbox.', 200);
         } catch (Exception $e) {
             return $this->error([], 'An error occurred. Please try again later.', 500);
@@ -95,13 +96,11 @@ class ResetPasswordController extends Controller
                 'otp' => $otp,
                 'otp_expires_at' => $otpExpiresAt,
             ]);
-
-            // You can send the OTP via email or SMS here. Example:
-            // Mail::to($user->email)->queue(new SendOtpMail($otp));
+            
+            Mail::to($user->email)->send(new SendForgotOtpMail($otp, $user));
 
             return $this->success([
                 'email' => $user->email,
-                'otp'   => $otp
             ], 'A new OTP has been sent to your registered email address. Please check your inbox.', 200);
         } catch (Exception $e) {
             Log::error($e->getMessage());

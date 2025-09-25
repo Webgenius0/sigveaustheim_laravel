@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SchoolRegisterSuccessForTeacherMail extends Mailable implements ShouldQueue
+class SchoolRegisterSuccessForTeacherMail extends Mailable
 {
     use Queueable, SerializesModels;
 
