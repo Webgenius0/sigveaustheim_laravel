@@ -13,6 +13,30 @@ class FeedBackController extends Controller
 {
     use ApiResponse;
 
+    // get my feedback
+    public function myFeedbacks()
+    {
+        try {
+            $user = auth()->user();
+            if (!$user) {
+                return $this->error([], 'Unauthorized.', 401);
+            }
+
+            $feedbacks = FeedBack::where('user_id', $user->id)
+                ->latest('id')
+                ->get();
+
+            return $this->success(
+                FeedBackResource::collection($feedbacks),
+                'Your feedbacks retrieved successfully.',
+                200
+            );
+        } catch (Exception $e) {
+            return $this->error([], 'Failed to fetch feedbacks. ' . $e->getMessage(), 500);
+        }
+    }
+
+
     // Get all reviews for a specific venue
     public function index()
     {
@@ -61,7 +85,7 @@ class FeedBackController extends Controller
 
             return $this->success(
                 new FeedBackResource($feedback),
-                'Feedback submitted successfully. Awaiting admin approval.',
+                'Feedback submitted successfully',
                 201
             );
         } catch (Exception $e) {

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Web\Backend\CertificateGenerateController;
 use App\Http\Controllers\Web\Backend\CMS\FitnessTestController;
 use App\Http\Controllers\Web\Backend\CMS\HeroController;
 use App\Http\Controllers\Web\Backend\CMS\HowItWorksController;
@@ -23,6 +22,7 @@ use App\Http\Controllers\Web\Backend\Settings\SocialSettingController;
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('dashboard/data', [DashboardController::class, 'getDashboardData'])->name('dashboard.data');
 
     // cms management
     Route::prefix('cms')->name('cms.')->group(function () {
@@ -83,9 +83,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Contact us
     Route::get('/', [ContactUsController::class, 'index'])->name('contact-us.index');
 });
-
-// Certificate generation
-Route::get('/certificate-generate/{id}', [CertificateGenerateController::class, 'generateCertificate']);
 
 
 

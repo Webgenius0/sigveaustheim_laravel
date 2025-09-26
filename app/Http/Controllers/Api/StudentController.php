@@ -37,6 +37,7 @@ class StudentController extends Controller
             $search = $request->get('search');
 
             $students = Student::with(['school', 'creator'])
+                ->where('created_by', $user->id)
                 ->when($search, function ($query, $search) {
                     $query->where('name', 'like', "%{$search}%");
                 })
@@ -64,7 +65,6 @@ class StudentController extends Controller
         }
     }
 
-
     // Show a specific student
     public function show($id)
     {
@@ -80,10 +80,11 @@ class StudentController extends Controller
                 'creator',
                 'testScores.fitnessTest'
             ])
+                ->where('created_by', $user->id) // Only allow access to students created by current user
                 ->find($id);
 
             if (!$student) {
-                return $this->error([], 'Student not found.', 404);
+                return $this->error([], 'Student not found or you do not have permission to view this student.', 404);
             }
 
             return $this->success(

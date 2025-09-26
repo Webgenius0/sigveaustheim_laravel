@@ -5,11 +5,13 @@
     <meta charset="UTF-8" />
     <title>Certificate</title>
 
+
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
 
         @page {
             size: A4;
+            margin: 0;
         }
 
         body {
@@ -17,15 +19,14 @@
             padding: 0;
             font-family: "Nunito Sans", "Times New Roman", serif;
             background: #fdfdfd;
-            padding: 20px;
         }
 
         .certificate {
             width: 210mm;
             height: 297mm;
-            padding: 20px 50px 50px 50px;
             box-sizing: border-box;
             margin: 0 auto;
+            padding: 20px 50px 50px 50px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -214,10 +215,10 @@
                 @foreach ($studentData['fitness_tests'] as $index => $test)
                     <div class="badge">
                         @if ($test['is_completed'])
-                            <img src="{{ asset('certificate/badge_' . ($index + 1) . '.png') }}"
-                                alt="{{ $test['name'] }}" />
+                            <img src="{{ public_path('certificate/badge_' . ($index + 1) . '.png') }}"
+                                alt="{{ $test['name'] }}">
                         @else
-                            <img src="{{ asset('certificate/cross.png') }}" alt="Not Completed" />
+                            <img src="{{ public_path('certificate/close.png') }}" alt="Not Completed" />
                         @endif
                     </div>
                 @endforeach
@@ -229,7 +230,7 @@
                 <p class="certificate_subtitle">Proudly presented to</p>
                 <p class="certificate_name">{{ $studentData['student']['name'] }}</p>
                 <p class="certificate_description">
-                    for having achieved {{ $studentData['summary']['overall_percentage'] }}%
+                    for having achieved {{ $studentData['summary']['overall_percentage'] }} points
                     in the FitnessQ assessment
                 </p>
             </div>
@@ -245,9 +246,9 @@
 
                 <!-- Signature Badge -->
                 <div class="signature_badge">
-                    <p>Level {{ ceil($studentData['summary']['overall_percentage'] / 10) }}</p>
+                    <p>Level {{ ceil($studentData['summary']['unique_tests_taken']) }}</p>
                     <p>******</p>
-                    <p>{{ $studentData['summary']['overall_percentage'] }}%</p>
+                    <p>{{ $studentData['summary']['last_test_scores_sum'] }}</p>
                 </div>
 
                 <!-- Signature -->

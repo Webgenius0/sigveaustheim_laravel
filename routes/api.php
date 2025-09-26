@@ -38,6 +38,10 @@ Route::group(['middleware' => 'guest:api'], function () {
     // Contact us
     Route::post('/contact-us', [ContactUsController::class, 'contactUs'])
         ->middleware('throttle:2,1');
+
+    Route::prefix('review')->group(function () {
+        Route::get('/', [FeedBackController::class, 'index']);
+    });
 });
 
 
@@ -69,7 +73,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     //review/feedback
     Route::prefix('review')->group(function () {
-        Route::get('/', [FeedBackController::class, 'index']); // Get all reviews
+        Route::get('/my', [FeedBackController::class, 'myFeedbacks']); // get my feedbacks
         Route::post('/store', [FeedBackController::class, 'store']); // Add or update review
         Route::delete('/delete/{id}', [FeedBackController::class, 'destroy']); // Delete a review
     });

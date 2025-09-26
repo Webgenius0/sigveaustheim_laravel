@@ -111,35 +111,62 @@ class AuthenticationController extends Controller
      */
     public function verifyEmail($token)
     {
-        $user = User::where('verification_token', $token)->first();
-        $admin = User::where('role', 'admin')->first();
+        try {
+            $user = User::where('verification_token', $token)->first();
+            $admin = User::where('role', 'admin')->first();
 
-        if (!$user) {
-            return response()->json(['message' => 'Invalid verification token.'], 400);
+            if (!$user) {
+                // Invalid token হলে error সহ redirect
+                return redirect('https://fitnessq.netlify.app/login?error=invalid_token&message=' . urlencode('Invalid verification token.'));
+            }
+
+            // Check if already verified
+            if ($user->email_verified_at) {
+                return redirect('https://fitnessq.netlify.app/login?error=already_verified&message=' . urlencode('Email is already verified. You can login now.'));
+            }
+
+            DB::beginTransaction();
+
+            try {
+                // Update user verification status
+                $user->email_verified_at = now();
+                $user->is_email_verified = true;
+                $user->verification_token = null; // clear token
+                $user->save();
+
+                // Get school and contact info
+                $school = $user->school;
+                $contact = Contact::where('school_id', $school->id)->first();
+
+                // Admin approval email
+                if ($admin) {
+                    $approveUrl = route('admin.schools.approve', ['token' => $school->approval_token]);
+                    $cancelUrl = route('admin.schools.cancel', ['token' => $school->approval_token]);
+
+                    Mail::to($admin->email)
+                        ->send(new SchoolRegisterSuccessForAdminMail($school, $approveUrl, $cancelUrl, $contact));
+                }
+
+                // Teacher confirmation email
+                if ($contact) {
+                    Mail::to($contact->email)
+                        ->send(new SchoolRegisterSuccessForTeacherMail($contact, $school));
+                }
+
+                DB::commit();
+
+                // redirect with success message
+                return redirect('https://fitnessq.netlify.app/login?verified=true&message=' . urlencode('Email verified successfully! Please wait for school approval from admin.'));
+            } catch (Exception $e) {
+                DB::rollBack();
+                Log::error('Email verification process failed: ' . $e->getMessage());
+
+                return redirect('https://fitnessq.netlify.app/login?error=verification_failed&message=' . urlencode('Verification failed. Please try again or contact support.'));
+            }
+        } catch (Exception $e) {
+            Log::error('Email verification error: ' . $e->getMessage());
+            return redirect('https://fitnessq.netlify.app/login?error=server_error&message=' . urlencode('Something went wrong. Please try again later.'));
         }
-
-        $user->email_verified_at = now();
-        $user->is_email_verified = true;
-        $user->verification_token = null; // clear token
-        $user->save();
-
-        // admin approval email
-        $school = $user->school;
-        $contact = Contact::where('school_id', $school->id)->first();
-
-        $approveUrl = route('admin.schools.approve', ['token' => $school->approval_token]);
-        $cancelUrl = route('admin.schools.cancel', ['token' => $school->approval_token]);
-
-        Mail::to($admin->email)
-            ->send (new SchoolRegisterSuccessForAdminMail($school, $approveUrl, $cancelUrl, $contact));
-
-        sleep(3);
-
-        Mail::to($contact->email)
-            ->send (new SchoolRegisterSuccessForTeacherMail($contact, $school));
-
-
-        return response()->json(['message' => 'Email verified successfully. Please wait for school approval.']);
     }
 
     /*

@@ -96,7 +96,7 @@ class ResetPasswordController extends Controller
                 'otp' => $otp,
                 'otp_expires_at' => $otpExpiresAt,
             ]);
-            
+
             Mail::to($user->email)->send(new SendForgotOtpMail($otp, $user));
 
             return $this->success([
@@ -158,7 +158,6 @@ class ResetPasswordController extends Controller
         }
     }
 
-
     /**
      * New password set
      */
@@ -189,7 +188,7 @@ class ResetPasswordController extends Controller
                 Log::error('Invalid token or token expired', [
                     'expires_at' => $user->reset_password_token_expire_at,
                 ]);
-                return $this->error([], 'Invalid token or token expired', 401);
+                return $this->error([], 'Invalid token or token expired', 422);
             }
 
             $user->update([

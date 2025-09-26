@@ -4,9 +4,10 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\Api\Auth\AuthenticationController;
 use App\Http\Controllers\Api\React\User\Auth\SocialLoginController;
+use App\Http\Controllers\Web\Backend\CertificateGenerateController;
 
 
-Route::get('/',function (){
+Route::get('/', function () {
     return view('welcome');
 });
 
@@ -102,8 +103,8 @@ Route::get('/run-storage-link', function () {
 // teacher email verification
 Route::get('/verify-email/{token}', [AuthenticationController::class, 'verifyEmail'])->name('verify.email');
 
+// Generate certificate
+Route::get('/certificate-generate/{id}', [CertificateGenerateController::class, 'generateCertificate']);
 
-require __DIR__.'/auth.php';
 
-
-
+require __DIR__ . '/auth.php';

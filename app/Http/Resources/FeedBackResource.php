@@ -18,7 +18,7 @@ class FeedBackResource extends JsonResource
             'id'      => $this->id,
             'rating'  => $this->rating,
             'comment' => $this->comment,
-            'avatar'  => $this->user?->avatar,
+            // 'avatar'  => $this->user?->avatar,
             'contact' => $this->user?->school?->contact ? [
                 'id'        => $this->user->school->contact->id,
                 'name'      => $this->user->school->contact->name,

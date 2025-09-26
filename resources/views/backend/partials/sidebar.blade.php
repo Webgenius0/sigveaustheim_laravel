@@ -93,7 +93,7 @@
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="#">
                         <i class="fa fa-list" style="margin-right: 8px;"></i>
-                        <span class="side-menu__label">How it works</span><i class="angle fa fa-angle-right"></i>
+                        <span class="side-menu__label">Landing Page</span><i class="angle fa fa-angle-right"></i>
                     </a>
 
                     <ul class="slide-menu">
@@ -108,6 +108,8 @@
                         <li><a href="{{ route('cms.ready-to-transform.section') }}" class="slide-item">Ready to
                                 transform</a>
                         </li>
+                        {{-- <li><a href="{{ route('cms.footer.section') }}" class="slide-item"> Footer </a>
+                        </li> --}}
                     </ul>
                 </li>
 

@@ -77,6 +77,7 @@ class StudentDetailsResource extends JsonResource
                 'unique_tests_taken'  => $uniqueTestsCount,
                 'overall_percentage'  => $overallPercentage,
                 'overall_comment'     => $this->getOverallComment($overallPercentage),
+                'last_test_scores_sum' => $totalLastScores,
             ],
         ];
     }
