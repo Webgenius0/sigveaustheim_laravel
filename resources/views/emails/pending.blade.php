@@ -19,7 +19,7 @@ This means your current subscription has expired, and renewal is required to con
 Without renewal, your school’s access to the platform (including event management, communication tools, and resources)
 will remain **inactive**.
 
-@component('mail::button', ['url' => config('app.frontend_url') . '/renew-subscription'])
+@component('mail::button', ['url' => config('app.frontend_url') . '/contact'])
     Contact For Renew
 @endcomponent
 

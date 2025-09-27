@@ -17,7 +17,7 @@ We regret to inform you that your school registration request for
 If you believe this is a mistake or need clarification,
 please contact our support team at **{{ config('mail.from.address') }}**.
 
-@component('mail::button', ['url' => 'https://your-frontend-domain.com/contact'])
+@component('mail::button', ['url' => config('app.frontend_url') . '/contact'])
 Contact Support
 @endcomponent
 

@@ -26,7 +26,10 @@ class CertificateGenerateController extends Controller
 
             $html = view('certificate.certificate', compact('studentData'))->render();
 
-            $path = storage_path('app/public/certificate.pdf');
+            // Generate unique filename
+            $fileName = 'certificate_' . str_replace(' ', '_', strtolower($student->name)) . '_' . now()->format('Ymd_His') . '.pdf';
+            $path = storage_path('app/public/' . $fileName);
+
 
             Browsershot::html($html)
                 ->setChromePath('C:\Program Files\Google\Chrome\Application\chrome.exe')

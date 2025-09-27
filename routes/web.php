@@ -104,7 +104,7 @@ Route::get('/run-storage-link', function () {
 Route::get('/verify-email/{token}', [AuthenticationController::class, 'verifyEmail'])->name('verify.email');
 
 // Generate certificate
-Route::get('/certificate-generate/{id}', [CertificateGenerateController::class, 'generateCertificate']);
+Route::get('/certificate-generate/{id}', [CertificateGenerateController::class, 'generateCertificate'])->name('certificate.generate');
 
 
 require __DIR__ . '/auth.php';
