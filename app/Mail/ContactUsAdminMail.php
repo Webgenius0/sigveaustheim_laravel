@@ -21,7 +21,7 @@ class ContactUsAdminMail extends Mailable
     public function build()
     {
         return $this->subject('New Contact Form Submission')
-            ->markdown('emails.contact.admin')
+            ->view('emails.contact.admin')
             ->with(['contact' => $this->contact]);
     }
 }

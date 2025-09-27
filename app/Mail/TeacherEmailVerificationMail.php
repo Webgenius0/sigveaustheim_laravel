@@ -30,6 +30,6 @@ class TeacherEmailVerificationMail extends Mailable
     public function build()
     {
         return $this->subject('Verify Your Email Address - School Registration')
-            ->markdown('emails.teacher_verification');
+            ->view('emails.teacher_verification');
     }
 }

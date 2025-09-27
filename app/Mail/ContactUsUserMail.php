@@ -20,7 +20,7 @@ class ContactUsUserMail extends Mailable
     public function build()
     {
         return $this->subject('Thank you for contacting us!')
-            ->markdown('emails.contact.user')
+            ->view('emails.contact.user')
             ->with(['contact' => $this->contact]);
     }
 }

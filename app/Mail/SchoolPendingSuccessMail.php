@@ -27,6 +27,6 @@ class SchoolPendingSuccessMail extends Mailable
     public function build()
     {
         return $this->subject('📌 Renewal Required for ' . $this->school->name)
-            ->markdown('emails.pending');
+            ->view('emails.pending');
     }
 }

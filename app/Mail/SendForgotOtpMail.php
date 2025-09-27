@@ -28,7 +28,7 @@ class SendForgotOtpMail extends Mailable
     public function build()
     {
         return $this->subject('Your Password Reset OTP')
-            ->markdown('emails.forgot_otp')
+            ->view('emails.forgot_otp')
             ->with([
                 'otp'  => $this->otp,
                 'user' => $this->user,

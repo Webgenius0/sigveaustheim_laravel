@@ -108,8 +108,8 @@
                         <li><a href="{{ route('cms.ready-to-transform.section') }}" class="slide-item">Ready to
                                 transform</a>
                         </li>
-                        {{-- <li><a href="{{ route('cms.footer.section') }}" class="slide-item"> Footer </a>
-                        </li> --}}
+                        <li><a href="{{ route('cms.footer.index') }}" class="slide-item"> Footer </a>
+                        </li>
                     </ul>
                 </li>
 

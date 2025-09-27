@@ -30,7 +30,7 @@ class SchoolApprovelSuccessMail extends Mailable
     public function build()
     {
         return $this->subject('🎉 School Approval Successful')
-            ->markdown('emails.approve')
+            ->view('emails.approve')
             ->with([
                 'teacher' => $this->teacher,
                 'school'  => $this->school,

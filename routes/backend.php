@@ -1,20 +1,21 @@
 <?php
 
-use App\Http\Controllers\Web\Backend\CMS\FitnessTestController;
-use App\Http\Controllers\Web\Backend\CMS\HeroController;
-use App\Http\Controllers\Web\Backend\CMS\HowItWorksController;
-use App\Http\Controllers\Web\Backend\CMS\NeedController;
-use App\Http\Controllers\Web\Backend\CMS\ReadyToTransformController;
-use App\Http\Controllers\Web\Backend\ContactUsController;
-use App\Http\Controllers\Web\Backend\SchoolApprovalController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\Backend\CMS\HeroController;
+use App\Http\Controllers\Web\Backend\CMS\NeedController;
+use App\Http\Controllers\Web\Backend\ContactUsController;
 use App\Http\Controllers\Web\Backend\DashboardController;
-use App\Http\Controllers\Web\Backend\FitnessTestManageController;
-use App\Http\Controllers\Web\Backend\SchoolManageController;
 use App\Http\Controllers\Web\Backend\TestimonialController;
+use App\Http\Controllers\Web\Backend\SchoolManageController;
+use App\Http\Controllers\Web\Backend\FooterSettingController;
+use App\Http\Controllers\Web\Backend\CMS\HowItWorksController;
+use App\Http\Controllers\Web\Backend\SchoolApprovalController;
+use App\Http\Controllers\Web\Backend\CMS\FitnessTestController;
 use App\Http\Controllers\Web\Backend\Settings\SocialController;
 use App\Http\Controllers\Web\Backend\Settings\ProfileController;
 use App\Http\Controllers\Web\Backend\Settings\SettingController;
+use App\Http\Controllers\Web\Backend\FitnessTestManageController;
+use App\Http\Controllers\Web\Backend\CMS\ReadyToTransformController;
 use App\Http\Controllers\Web\Backend\Settings\DynamicPageController;
 use App\Http\Controllers\Web\Backend\Settings\MailSettingController;
 use App\Http\Controllers\Web\Backend\Settings\SocialSettingController;
@@ -59,6 +60,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
         // how it works section
         Route::get('/ready-to-transform', [ReadyToTransformController::class, 'index'])->name('ready-to-transform.section');
         Route::post('/ready-to-transform/update', [ReadyToTransformController::class, 'update'])->name('update.ready-to-transform.section');
+
+        // footer manage
+        Route::prefix('footer')->group(function () {
+            Route::get('/', [FooterSettingController::class,'index'])->name('footer.index');
+            Route::get('/update', [FooterSettingController::class,'update'])->name('footer.update');
+        });
     });
 
     //approve school

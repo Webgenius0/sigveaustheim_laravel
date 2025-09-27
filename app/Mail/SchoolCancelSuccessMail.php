@@ -30,7 +30,7 @@ class SchoolCancelSuccessMail extends Mailable
     public function build()
     {
         return $this->subject('❌ School Registration Cancelled')
-            ->markdown('emails.cancel')
+            ->view('emails.cancel')
             ->with([
                 'teacher' => $this->teacher,
                 'school'  => $this->school,
