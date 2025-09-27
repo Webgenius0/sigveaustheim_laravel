@@ -78,7 +78,7 @@ class StudentDetailsResource extends JsonResource
                 'overall_percentage'  => $overallPercentage,
                 'overall_comment'     => $this->getOverallComment($overallPercentage),
                 'last_test_scores_sum' => $totalLastScores,
-                'certificate_link' => route('certificate.generate', ['id' => $this->id]),
+                // 'certificate_link' => route('certificate.generate', ['id' => $this->id]),
             ],
         ];
     }

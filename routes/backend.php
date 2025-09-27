@@ -7,7 +7,7 @@ use App\Http\Controllers\Web\Backend\ContactUsController;
 use App\Http\Controllers\Web\Backend\DashboardController;
 use App\Http\Controllers\Web\Backend\TestimonialController;
 use App\Http\Controllers\Web\Backend\SchoolManageController;
-use App\Http\Controllers\Web\Backend\FooterSettingController;
+use App\Http\Controllers\Web\Backend\CMS\FooterSettingController;
 use App\Http\Controllers\Web\Backend\CMS\HowItWorksController;
 use App\Http\Controllers\Web\Backend\SchoolApprovalController;
 use App\Http\Controllers\Web\Backend\CMS\FitnessTestController;
@@ -64,7 +64,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         // footer manage
         Route::prefix('footer')->group(function () {
             Route::get('/', [FooterSettingController::class,'index'])->name('footer.index');
-            Route::get('/update', [FooterSettingController::class,'update'])->name('footer.update');
+            Route::post('/update', [FooterSettingController::class,'update'])->name('footer.update');
         });
     });
 
