@@ -181,7 +181,7 @@ class AuthenticationController extends Controller
             $user = User::where('username', $validatedData['username'])->first();
 
             if (!$user) {
-                return $this->error([], 'Invalid username or password.', 401);
+                return $this->error([], 'Invalid username or password.', 422);
             }
 
             // Check role (must be teacher)

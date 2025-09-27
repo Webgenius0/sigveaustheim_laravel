@@ -32,7 +32,7 @@ class CMSDataController extends Controller
                 'description' => $footerSetting->description,
                 'email' => $footerSetting->email,
                 'phone' => $footerSetting->phone,
-                'help_center_pdf' => $footerSetting->help_center_pdf ? asset($footerSetting->help_center_pdf) : null,
+                'terms_$_condition' => $footerSetting->help_center_pdf ? asset($footerSetting->help_center_pdf) : null,
                 'privacy_policy_pdf' => $footerSetting->privacy_policy_pdf ? asset($footerSetting->privacy_policy_pdf) : null,
                 'social_icons' => collect($footerSetting->social_icons ?? [])->map(function ($icon) {
                     return [
@@ -45,8 +45,10 @@ class CMSDataController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'data'   => $grouped,
-            'footer' => $footer,
+            'data'   => array_merge(
+                $grouped->toArray(), // CMS sections
+                ['footer' => $footer] // Footer inside data
+            ),
         ], 200);
     }
 }

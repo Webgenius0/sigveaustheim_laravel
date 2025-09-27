@@ -177,7 +177,7 @@
             // Function to create new social icon row
             function createSocialIconRow(currentIndex) {
                 const row = document.createElement('div');
-                row.className = 'row mb-3 social-item border rounded p-3';
+                row.className = 'row mb-3 social-item border p-3';
                 row.innerHTML = `
                     <div class="col-md-5">
                         <label class="form-label small">Icon Image</label>

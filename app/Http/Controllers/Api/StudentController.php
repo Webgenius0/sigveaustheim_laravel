@@ -3,13 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use Exception;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 use App\Models\Student;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
-use App\Models\StudentCertificate;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\StudentResource;
 use Illuminate\Support\Facades\Validator;

@@ -24,7 +24,7 @@ class StudentDetailsResource extends JsonResource
             return [
                 'id' => $test->id,
                 'name' => $test->name,
-                'unit' => $test->scoring_type,
+                'unit' => $lastScore?->unit,
                 'is_completed' => $scores->isNotEmpty(),
                 'attempts' => $scores->count(),
                 'last_score' => $scoreValue,
