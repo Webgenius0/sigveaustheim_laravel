@@ -11,7 +11,7 @@ use App\Models\FooterSetting;
 class CMSDataController extends Controller
 {
     //get cms data by key
-    public function getData(Request $request)
+    public function getData()
     {
         // CMS Data (grouped)
         $data = CMS::all();
@@ -22,7 +22,7 @@ class CMSDataController extends Controller
         });
 
         // Footer Data
-        $footerSetting = FooterSetting::first(); // Only one row expected
+        $footerSetting = FooterSetting::first();
 
         // Format footer data (with asset paths)
         $footer = null;
@@ -32,7 +32,7 @@ class CMSDataController extends Controller
                 'description' => $footerSetting->description,
                 'email' => $footerSetting->email,
                 'phone' => $footerSetting->phone,
-                'terms_$_condition' => $footerSetting->help_center_pdf ? asset($footerSetting->help_center_pdf) : null,
+                'terms_&_condition' => $footerSetting->help_center_pdf ? asset($footerSetting->help_center_pdf) : null,
                 'privacy_policy_pdf' => $footerSetting->privacy_policy_pdf ? asset($footerSetting->privacy_policy_pdf) : null,
                 'social_icons' => collect($footerSetting->social_icons ?? [])->map(function ($icon) {
                     return [
