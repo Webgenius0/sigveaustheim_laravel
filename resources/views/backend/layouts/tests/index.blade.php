@@ -29,7 +29,8 @@
                                 <div class="card-header border-bottom mb-3">
                                     <div class="card-options ms-auto">
                                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#fitnessTestModal" id="addTestBtn">Add Test</button>
+                                            data-bs-target="#fitnessTestModal" id="addTestBtn"
+                                            @if ($isAddButtonDisabled) disabled @endif>Add Test</button>
                                     </div>
                                 </div>
 
@@ -180,7 +181,17 @@
                         orderable: false,
                         searchable: false
                     }
-                ]
+                ],
+
+                drawCallback: function(settings) {
+                    let testCount = settings.json.data.length;
+                    let addButton = $('#addTestBtn');
+                    if (testCount >= 10) {
+                        addButton.prop('disabled', true);
+                    } else {
+                        addButton.prop('disabled', false);
+                    }
+                }
             });
 
 
@@ -310,8 +321,6 @@
             });
 
         });
-
-
 
 
         // delete Confirm

@@ -153,7 +153,6 @@ class UserProfileController extends Controller
         }
     }
 
-    // update password
     //update password
     public function updatePassword(Request $request)
     {
@@ -177,6 +176,36 @@ class UserProfileController extends Controller
 
             return $this->success(['Password updated successfully'], 'Password updated successfully.', 200);
         } catch (Exception $e) {
+            return $this->error([], $e->getMessage(), 500);
+        }
+    }
+
+    // update signature
+    public function updateSignature(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'signature' => ['required', 'image', 'max:5120'],
+            ]);
+
+
+            if ($validator->fails()) {
+                return $this->error([], $validator->errors()->first(), 422);
+            }
+
+            $user = auth('api')->user();
+
+            if ($user->signature) {
+                Helper::deleteImage($user->signature);
+            }
+
+            $signaturePath = Helper::uploadImage($request->file('signature'), 'signature');
+
+            $user->update(['signature' => $signaturePath]);
+
+            return $this->success(['signature' => url($signaturePath)], 'Signature updated successfully.', 200);
+        } catch (Exception $e) {
+            Log::error('Signature Update Error: ' . $e->getMessage());
             return $this->error([], $e->getMessage(), 500);
         }
     }

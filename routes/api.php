@@ -50,6 +50,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     //User logout
     Route::post('/logout', [AuthenticationController::class, 'logout']);
 
+    // upload signature
+    Route::post('/update-signature', [UserProfileController::class, 'updateSignature']);
+
+
     //Profile
     Route::get('/profile', [UserProfileController::class, 'profile']);
     Route::post('/update-profile', [UserProfileController::class, 'updateProfile']);

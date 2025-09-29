@@ -47,7 +47,10 @@ class FitnessTestManageController extends Controller
                 ->make(true);
         }
 
-        return view('backend.layouts.tests.index');
+        $testCount = FitnessTests::count();
+        $isAddButtonDisabled = $testCount >= 10;
+
+        return view('backend.layouts.tests.index', compact('isAddButtonDisabled'));
     }
 
 

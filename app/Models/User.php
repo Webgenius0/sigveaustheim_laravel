@@ -14,7 +14,6 @@ class User extends Authenticatable implements JWTSubject
 
     // fillable
     protected $fillable = [
-        'school_id',
         'username',
         'password',
         'role',
@@ -27,7 +26,8 @@ class User extends Authenticatable implements JWTSubject
         'reset_password_token_expire_at',
         'email_verified_at',
         'is_email_verified',
-        'verification_token'
+        'verification_token',
+        'signature'
     ];
 
 
