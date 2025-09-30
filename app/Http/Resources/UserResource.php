@@ -42,8 +42,7 @@ class UserResource extends JsonResource
                 'email' => $this->email,
                 'role' => $this->role,
                 'signature' => $this->signature
-                    ? asset($this->signature)
-                    : asset('default/signature.png'),
+                    ? asset($this->signature) : null,
             ],
         ];
     }
