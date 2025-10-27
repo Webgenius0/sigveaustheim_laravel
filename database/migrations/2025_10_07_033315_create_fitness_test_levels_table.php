@@ -26,6 +26,7 @@ return new class extends Migration
             $table->unique(['test_id', 'level']);
         });
     }
+    // remove file
 
     /**
      * Reverse the migrations.
