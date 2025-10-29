@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TestRecordSheetController;
 use App\Http\Controllers\Web\Backend\FitnessGuiedController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Backend\CMS\HeroController;
@@ -92,6 +93,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // upload test guide
     Route::get('/upload-fitness-guide', [FitnessGuiedController::class, 'upload'])->name('upload.fitness.guide');
     Route::post('/upload-fitness-guide', [FitnessGuiedController::class, 'store'])->name('test-guides.store');
+    Route::post('/upload-fitness-guide', [FitnessGuiedController::class, 'store'])->name('test-guides.store');
+
+    // upload test record sheet
+    Route::get('/upload-test-sheet', [TestRecordSheetController::class,'index'])->name('test.record.sheet');
+    Route::post('/upload-test-sheet/upload', [TestRecordSheetController::class,'store'])->name('test.record.sheet.store');
+    Route::get('/upload-test-sheet/edit/{id}', [TestRecordSheetController::class,'edit'])->name('test.record.sheet.edit');
+    Route::post('/upload-test-sheet/update/{id}', [TestRecordSheetController::class,'update'])->name('test.record.sheet.update');
+    Route::delete('/upload-test-sheet/delete/{id}', [TestRecordSheetController::class,'destroy'])->name('test.record.sheet.delete');
 
     // Fitness Test Levels Routes
     Route::prefix('fitness/test/levels')->name('fitness.test.level.')->group(function () {

@@ -58,6 +58,8 @@
                         </li>
                         <li><a href="{{ route('upload.fitness.guide') }}" class="slide-item">Upload Test Guide</a>
                         </li>
+                        <li><a href="{{ route('test.record.sheet') }}" class="slide-item">Upload Test Record Sheet</a>
+                        </li>
                     </ul>
                 </li>
 

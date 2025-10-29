@@ -8,6 +8,7 @@ use App\Http\Resources\CMSResource;
 use App\Http\Controllers\Controller;
 use App\Models\FooterSetting;
 use App\Models\TestGuide;
+use App\Models\TestRecordSheet;
 
 class CMSDataController extends Controller
 {
@@ -17,6 +18,7 @@ class CMSDataController extends Controller
         // CMS Data
         $data = CMS::all();
         $testGuide = TestGuide::first();
+        $recordSheets = TestRecordSheet::select('id', 'name', 'sheet_url')->get();
 
         $grouped = $data->groupBy('section')->map(function ($sectionItems) {
             return $sectionItems->groupBy('name')->map(function ($items) {
@@ -54,6 +56,15 @@ class CMSDataController extends Controller
             ];
         }
 
+        // Add multiple test sheet pdf links
+        $testSheetData = $recordSheets->map(function ($sheet) {
+            return [
+                'id' => $sheet->id,
+                'name' => $sheet->name,
+                'sheet_url' => $sheet->sheet_url ? asset($sheet->sheet_url) : null,
+            ];
+        })->values()->all();
+
         return response()->json([
             'status' => 'success',
             'data' => array_merge(
@@ -61,6 +72,7 @@ class CMSDataController extends Controller
                 [
                     'footer' => $footer,
                     'test_guide' => $testGuideData,
+                    'test_sheets' => $testSheetData,
                 ]
             ),
         ], 200);
