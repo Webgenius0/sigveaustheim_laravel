@@ -116,7 +116,7 @@ class AuthenticationController extends Controller
             $admin = User::where('role', 'admin')->first();
 
             if (!$user) {
-                // Invalid token হলে error সহ redirect
+                // Invalid token
                 return redirect('https://fitnessq.netlify.app/login?error=invalid_token&message=' . urlencode('Invalid verification token.'));
             }
 
