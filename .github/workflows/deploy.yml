@@ -16,6 +16,4 @@ jobs:
         with:
           server: ftp.fitnessq.net
           username: 214705_backend
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./admin       # local admin folder in repo
-          remote-dir: /fitnessq.net/admin
+          password: 'F@3csVnNtbNWdtFKYd%U'
