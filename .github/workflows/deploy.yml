@@ -14,8 +14,8 @@ jobs:
       - name: FTP Deploy Admin
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
+          server: ftp.fitnessq.net
+          username: 214705_backend
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./admin
+          local-dir: ./admin       # local admin folder in repo
           remote-dir: /fitnessq.net/admin
